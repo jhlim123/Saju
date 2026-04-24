@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Apple Aesthetic Colors */
+  --bg-color: #f5f5f7;
+  --surface-color: #ffffff;
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --accent-color: #1d1d1f;
+  
+  /* Five Elements - Original Vibrant Colors */
+  --wood-bg: #4ade80;
+  --wood-text: #000000;
+  
+  --fire-bg: #ef4444;
+  --fire-text: #ffffff;
+  
+  --earth-bg: #facc15;
+  --earth-text: #000000;
+  
+  --metal-bg: #ffffff;
+  --metal-text: #000000;
+  
+  --water-bg: #374151;
+  --water-text: #ffffff;
+}
+
+.portrait-alert {
+  display: none;
+  background: rgba(29, 29, 31, 0.85);
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@media (max-width: 640px) and (orientation: portrait) {
+  .portrait-alert {
+    display: block;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.app-container {
+  max-width: 480px;
+  width: 100%;
+  background: var(--surface-color);
+  border-radius: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+  padding-bottom: 30px;
+  margin: 0 auto;
+  min-height: 80vh;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 0;
+  }
+  .app-container {
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    min-height: 100vh;
+  }
+}
+
+/* Saju Box Styles */
+.saju-box {
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  height: 56px;
+  width: 56px;
+  margin: 4px auto;
+  border-radius: 14px;
+}
+
+@media (max-width: 320px) {
+  .saju-box {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+  }
+}
+
+.wood { background-color: var(--wood-bg); color: var(--wood-text); }
+.fire { background-color: var(--fire-bg); color: var(--fire-text); }
+.earth { background-color: var(--earth-bg); color: var(--earth-text); }
+.metal { background-color: var(--metal-bg); color: var(--metal-text); border: 1px solid #cbd5e1; }
+.water { background-color: var(--water-bg); color: var(--water-text); }
+
+/* Table styles for Manseryeok */
+.saju-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.saju-table th {
+  padding: 8px 4px;
+  font-weight: normal;
+  font-size: 0.95rem;
+}
+
+.saju-table td {
+  padding: 4px 2px;
+}
+
+/* Custom Scrollbar for horizontal scrolling tables */
+.horizontal-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-bottom: 5px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* Interpretation Section Responsiveness */
+@media (max-width: 640px) {
+  .interpretation-container {
+    padding: 10px !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  
+  .interpretation-card, .luck-flow-card {
+    padding: 12px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+  
+  .section-title {
+    font-size: 1.1rem !important;
+  }
+  
+  .interpretation-text, .luck-desc {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .monthly-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .reset-button {
+    width: 100%;
+    padding: 15px 20px !important;
+    font-size: 1rem !important;
+    border-radius: 12px !important;
+  }
+  
+  .daewun-header {
+    font-size: 0.95rem !important;
+  }
+
+  .profile-name {
+    font-size: 1rem !important;
+  }
+
+  .profile-date {
+    font-size: 0.75rem !important;
+  }
+}
