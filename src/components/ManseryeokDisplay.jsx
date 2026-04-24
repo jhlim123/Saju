@@ -174,8 +174,8 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
         </div>
         <div style={{ fontSize: '0.85rem', color: '#3b82f6', marginTop: '2px' }}>
           {language === 'ko' 
-            ? `첫대운 시작일: ${birthYear + daewunStartAge}년 ${userInfo.solarMonth}월 ${userInfo.solarDay}일경` 
-            : `First Daewun Starts: Around ${userInfo.solarMonth}/${userInfo.solarDay}/${birthYear + daewunStartAge}`}
+            ? `첫대운 시작일: ${daewunInfo.startDate || (birthYear + daewunStartAge) + '년경'}` 
+            : `First Daewun Starts: ${daewunInfo.startDate || 'Around ' + (birthYear + daewunStartAge)}`}
         </div>
       </div>
 

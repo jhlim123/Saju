@@ -334,22 +334,37 @@ export const calculateDaewunStartAge = (birthDateStr, birthTimeStr, sajuData, ge
       ? nextJeolLinear - birthLinear
       : birthLinear - currentJeolLinear;
 
-    const preciseAgeValue = dayDiff / 3;
-    // 대운수가 100을 넘는 것은 로직 오류이므로 캡핑 (하지만 근본 원인은 위에서 해결됨)
-    const finalPreciseAge = Math.min(120, Math.max(0, preciseAgeValue));
-    const roundedAge = Math.round(finalPreciseAge);
+    // [Step 3 & 4] 총 시간 간격의 분(Minute) 단위 환산 및 가산 일수 산출
+    const totalMinutes = Math.round(dayDiff * 1440);
+    const totalAddedDays = totalMinutes / 12; // 천을귀인 정밀 환산 법칙: 12분 = 1일
+
+    // 1년 = 360일, 1개월 = 30일 기준으로 변환
+    const years = Math.floor(totalAddedDays / 360);
+    let remainder = totalAddedDays % 360;
+    const months = Math.floor(remainder / 30);
+    const days = Math.floor(remainder % 30);
+
+    // 대운수는 반올림하여 정수로 표기 (통상적인 대운수)
+    const roundedAge = Math.round(totalAddedDays / 120); // 120일(4개월)이 1년의 1/3이므로
     
-    const years = Math.floor(finalPreciseAge);
-    const remainingDays = (finalPreciseAge - years) * 3;
-    const months = Math.floor(remainingDays * 4);
-    const days = Math.floor(((remainingDays * 4) - months) * 30);
+    // [Step 5] 첫 대운 시작일 산출 (실제 달력 기준, 윤년 포함)
+    const startDate = new Date(birthYear, birthMonth - 1, birthDay, birthHour, birthMin);
+    startDate.setFullYear(startDate.getFullYear() + years);
+    startDate.setMonth(startDate.getMonth() + months);
+    startDate.setDate(startDate.getDate() + days);
+
+    const startYear = startDate.getFullYear();
+    const startMonth = startDate.getMonth() + 1;
+    const startDay = startDate.getDate();
+    const startDateFormat = `${startYear}년 ${startMonth}월 ${startDay}일`;
 
     return {
-      age: Math.max(1, roundedAge),
-      preciseAge: finalPreciseAge,
+      age: Math.max(1, Math.round(years + (months / 12) + (days / 360))), // 표준 대운수
+      preciseAge: years + (months / 12) + (days / 360),
       years,
       months,
       days,
+      startDate: startDateFormat,
       details: `${years}년 ${months}개월 ${days}일`
     };
   } catch (e) {
