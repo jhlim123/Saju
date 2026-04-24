@@ -1,223 +1,40 @@
 export const translations = {
   ko: {
-    // UI
-    appName: "새로운 사주를 입력하세요",
-    name: "이름",
-    gender: "성별",
-    male: "남자",
-    female: "여자",
-    calendar: "달력",
-    solar: "양력",
-    lunar: "음력",
-    leapMonth: "평/윤달",
-    normalMonth: "평달",
-    isLeapMonth: "윤달",
-    birthDate: "생년월일",
-    birthTime: "출생시간",
-    birthDatePlaceholder: "예: 19881230",
-    birthTimePlaceholder: "예: 1459",
-    unknownTime: "시간모름 (선택)",
-    directInput: "직접입력",
-    zodiacTime: "12지시",
-    lookup: "사주조회",
-    savedHistory: "저장된 사주 보기",
-    historyTitle: "사주 저장 목록",
-    searchPlaceholder: "이름으로 검색...",
-    sortLatest: "최신순 ↓",
-    sortOldest: "오래된순 ↑",
-    delete: "삭제",
-    deleteAll: "기록 전체 삭제",
-    back: "뒤로가기",
-    noHistory: "저장된 사주 정보가 없습니다.",
-    creatorInfo: "만든 사람 정보",
-    translateBtn: "번역기로 보기 (Translate)",
-    copiedAndTranslate: "복사 완료! 구글 번역기를 엽니다...",
-    
-    // Saju Terms
-    hourPillar: "시주",
-    dayPillar: "일주",
-    monthPillar: "월주",
-    yearPillar: "년주",
-    dayMaster: "일간(나)",
-    unknown: "모름",
-    age: "만",
-    ageSuffix: "세",
-    daewunTitle: "대운",
-    sewunTitle: "세운",
-    wolunTitle: "절운",
-    
-    // Ten Gods
-    friend: "비견",
-    robWealth: "겁재",
-    eatingGod: "식신",
-    hurtingOfficer: "상관",
-    indirectWealth: "편재",
-    directWealth: "정재",
-    indirectOfficer: "편관",
-    directOfficer: "정관",
-    indirectResource: "편인",
-    directResource: "정인",
-    
-    // 12 Stages
-    stageBirth: "장생",
-    stageBath: "목욕",
-    stageYouth: "관대",
-    stageOfficial: "건록",
-    stageProsperous: "제왕",
-    stageDecline: "쇠",
-    stageSick: "병",
-    stageDeath: "사",
-    stageTomb: "묘",
-    stageExtinct: "절",
-    stageConceive: "태",
-    stageNourish: "양",
-    
-    // Analysis Section Titles
-    analysisTitle: "사주 심층 해설",
-    personalityTitle: "나의 성격 풀이",
-    expertAnalysisTitle: "전문가 종합 분석",
-    japyungTitle: "자평진전(子平眞詮) 기준 격국론",
-    yeonhaeTitle: "연해자평(淵海子平) 기준 성정 및 운세",
-    daewunDesc: "대운 해설",
-    sewunDesc: "세운 해설",
-    wolunDesc: "절운(월운) 상세 해설",
-    aiPromptTitle: "AI 명리학 심층 분석 프롬프트",
-    showPrompt: "프롬프트 보기",
-    hidePrompt: "숨기기",
-    copyAll: "전체 복사하기",
-    copied: "✅ 복사완료",
-    newLookup: "새로운 사주입력",
-    aiNotice: "※ 위 해설은 고전 문헌의 내용을 바탕으로 한 인공지능 분석 결과입니다.",
-    portraitWarning: "화면이 작을 경우 가로 모드로 보시면 더욱 편리합니다. 📱",
+    appName: "새로운 사주를 입력하세요", name: "이름", gender: "성별", male: "남자", female: "여자", calendar: "달력", solar: "양력", lunar: "음력", leapMonth: "평/윤달", normalMonth: "평달", isLeapMonth: "윤달", birthDate: "생년월일", birthTime: "출생시간", birthDatePlaceholder: "예: 19881230", birthTimePlaceholder: "예: 1459", unknownTime: "시간모름 (선택)", directInput: "직접입력", zodiacTime: "12지시", lookup: "사주조회", savedHistory: "저장된 사주 보기", historyTitle: "사주 저장 목록", searchPlaceholder: "이름으로 검색...", sortLatest: "최신순 ↓", sortOldest: "오래된순 ↑", delete: "삭제", deleteAll: "기록 전체 삭제", back: "뒤로가기", noHistory: "저장된 사주 정보가 없습니다.", creatorInfo: "만든 사람 정보", translateBtn: "번역기로 보기 (Translate)", copiedAndTranslate: "복사 완료! 구글 번역기를 엽니다...",
+    hourPillar: "시주", dayPillar: "일주", monthPillar: "월주", yearPillar: "년주", dayMaster: "일간(나)", unknown: "모름", age: "만", ageSuffix: "세", daewunTitle: "대운", sewunTitle: "세운", wolunTitle: "절운",
+    friend: "비견", robWealth: "겁재", eatingGod: "식신", hurtingOfficer: "상관", indirectWealth: "편재", directWealth: "정재", indirectOfficer: "편관", directOfficer: "정관", indirectResource: "편인", directResource: "정인",
+    stageBirth: "장생", stageBath: "목욕", stageYouth: "관대", stageOfficial: "건록", stageProsperous: "제왕", stageDecline: "쇠", stageSick: "병", stageDeath: "사", stageTomb: "묘", stageExtinct: "절", stageConceive: "태", stageNourish: "양",
+    analysisTitle: "사주 심층 해설", personalityTitle: "나의 성격 풀이", expertAnalysisTitle: "전문가 종합 분석", japyungTitle: "자평진전(子平眞詮) 기준 격국론", yeonhaeTitle: "연해자평(淵海子平) 기준 성정 및 운세", daewunDesc: "대운 해설", sewunDesc: "세운 해설", wolunDesc: "절운(월운) 상세 해설", aiPromptTitle: "AI 명리학 심층 분석 프롬프트", showPrompt: "프롬프트 보기", hidePrompt: "숨기기", copyAll: "전체 복사하기", copied: "✅ 복사완료", newLookup: "새로운 사주입력", aiNotice: "※ 위 해설은 고전 문헌의 내용을 바탕으로 한 인공지능 분석 결과입니다.", portraitWarning: "화면이 작을 경우 가로 모드로 보시면 더욱 편리합니다. 📱",
   },
   en: {
-    // UI
-    appName: "Enter New Saju Data",
-    name: "Name",
-    gender: "Gender",
-    male: "Male",
-    female: "Female",
-    calendar: "Calendar",
-    solar: "Solar",
-    lunar: "Lunar",
-    leapMonth: "Leap M.",
-    normalMonth: "Normal",
-    isLeapMonth: "Leap",
-    birthDate: "Birth Date",
-    birthTime: "Birth Time",
-    birthDatePlaceholder: "e.g. 19881230",
-    birthTimePlaceholder: "e.g. 1459",
-    unknownTime: "Unknown (Optional)",
-    directInput: "Input",
-    zodiacTime: "Zodiac",
-    lookup: "Analyze",
-    savedHistory: "Saved Records",
-    historyTitle: "Saved Saju Records",
-    searchPlaceholder: "Search by name...",
-    sortLatest: "Latest ↓",
-    sortOldest: "Oldest ↑",
-    delete: "Delete",
-    deleteAll: "Delete All Records",
-    back: "Back",
-    noHistory: "No saved records found.",
-    creatorInfo: "Creator Info",
-    translateBtn: "Translate via Google",
-    copiedAndTranslate: "Copied! Opening Google Translate...",
-    
-    // Saju Terms
-    hourPillar: "Hour",
-    dayPillar: "Day",
-    monthPillar: "Month",
-    yearPillar: "Year",
-    dayMaster: "일간(Me)",
-    unknown: "Unknown",
-    age: "Age",
-    ageSuffix: "",
-    daewunTitle: "10-Year Luck",
-    sewunTitle: "Annual Luck",
-    wolunTitle: "Monthly Luck",
-    
-    // Ten Gods
-    friend: "Friend",
-    robWealth: "Rob Wealth",
-    eatingGod: "Eating God",
-    hurtingOfficer: "Hurting Officer",
-    indirectWealth: "Indirect Wealth",
-    directWealth: "Direct Wealth",
-    indirectOfficer: "7 Killings",
-    directOfficer: "Direct Officer",
-    indirectResource: "Indirect Resource",
-    directResource: "Direct Resource",
-    
-    // 12 Stages
-    stageBirth: "Birth",
-    stageBath: "Bath",
-    stageYouth: "Youth",
-    stageOfficial: "Official",
-    stageProsperous: "Prosperous",
-    stageDecline: "Decline",
-    stageSick: "Sick",
-    stageDeath: "Death",
-    stageTomb: "Tomb",
-    stageExtinct: "Extinct",
-    stageConceive: "Conceive",
-    stageNourish: "Nourish",
-    // Analysis Section Titles
-    analysisTitle: "In-depth Saju Analysis",
-    personalityTitle: "My Personality Analysis",
-    expertAnalysisTitle: "Expert Comprehensive Analysis",
-    japyungTitle: "Japyung Jinjeon Structure",
-    yeonhaeTitle: "Yeonhae Japyung Destiny",
-    daewunDesc: "Daewun (10-Year) Analysis",
-    sewunDesc: "Sewun (Annual) Analysis",
-    wolunDesc: "Wolun (Monthly) Detailed Analysis",
-    aiPromptTitle: "AI Saju Expert Prompt",
-    showPrompt: "Show Prompt",
-    hidePrompt: "Hide",
-    copyAll: "Copy All",
-    copied: "✅ Copied",
-    newLookup: "New Saju Input",
-    aiNotice: "※ This analysis is generated by AI based on classic Myeongrihak literature.",
-    portraitWarning: "For the best experience, landscape mode is recommended. 📱",
+    appName: "Enter New Saju Data", name: "Name", gender: "Gender", male: "Male", female: "Female", calendar: "Calendar", solar: "Solar", lunar: "Lunar", leapMonth: "Leap M.", normalMonth: "Normal", isLeapMonth: "Leap", birthDate: "Birth Date", birthTime: "Birth Time", birthDatePlaceholder: "e.g. 19881230", birthTimePlaceholder: "e.g. 1459", unknownTime: "Unknown (Optional)", directInput: "Input", zodiacTime: "Zodiac", lookup: "Analyze", savedHistory: "Saved Records", historyTitle: "Saved Saju Records", searchPlaceholder: "Search by name...", sortLatest: "Latest ↓", sortOldest: "Oldest ↑", delete: "Delete", deleteAll: "Delete All Records", back: "Back", noHistory: "No saved records found.", creatorInfo: "Creator Info", translateBtn: "Translate via Google", copiedAndTranslate: "Copied! Opening Google Translate...",
+    hourPillar: "Hour", dayPillar: "Day", monthPillar: "Month", yearPillar: "Year", dayMaster: "일간(Me)", unknown: "Unknown", age: "Age", ageSuffix: "", daewunTitle: "10-Year Luck", sewunTitle: "Annual Luck", wolunTitle: "Monthly Luck",
+    friend: "Friend", robWealth: "Rob Wealth", eatingGod: "Eating God", hurtingOfficer: "Hurting Officer", indirectWealth: "Indirect Wealth", directWealth: "Direct Wealth", indirectOfficer: "7 Killings", directOfficer: "Direct Officer", indirectResource: "Indirect Resource", directResource: "Direct Resource",
+    stageBirth: "Birth", stageBath: "Bath", stageYouth: "Youth", stageOfficial: "Official", stageProsperous: "Prosperous", stageDecline: "Decline", stageSick: "Sick", stageDeath: "Death", stageTomb: "Tomb", stageExtinct: "Extinct", stageConceive: "Conceive", stageNourish: "Nourish",
+    analysisTitle: "In-depth Saju Analysis", personalityTitle: "My Personality Analysis", expertAnalysisTitle: "Expert Comprehensive Analysis", japyungTitle: "Japyung Jinjeon Structure", yeonhaeTitle: "Yeonhae Japyung Destiny", daewunDesc: "Daewun (10-Year) Analysis", sewunDesc: "Sewun (Annual) Analysis", wolunDesc: "Wolun (Monthly) Detailed Analysis", aiPromptTitle: "AI Saju Expert Prompt", showPrompt: "Show Prompt", hidePrompt: "Hide", copyAll: "Copy All", copied: "✅ Copied", newLookup: "New Saju Input", aiNotice: "※ This analysis is generated by AI based on classic Myeongrihak literature.", portraitWarning: "For the best experience, landscape mode is recommended. 📱",
   }
 };
 
+export const stems = [
+  { char: '甲', element: 'wood', yinYang: 1 }, { char: '乙', element: 'wood', yinYang: 0 }, { char: '丙', element: 'fire', yinYang: 1 }, { char: '丁', element: 'fire', yinYang: 0 }, { char: '戊', element: 'earth', yinYang: 1 }, { char: '己', element: 'earth', yinYang: 0 }, { char: '庚', element: 'metal', yinYang: 1 }, { char: '辛', element: 'metal', yinYang: 0 }, { char: '壬', element: 'water', yinYang: 1 }, { char: '癸', element: 'water', yinYang: 0 }
+];
+
+export const branches = [
+  { char: '子', element: 'water', yinYang: 0 }, { char: '丑', element: 'earth', yinYang: 0 }, { char: '寅', element: 'wood', yinYang: 1 }, { char: '卯', element: 'wood', yinYang: 0 }, { char: '辰', element: 'earth', yinYang: 1 }, { char: '巳', element: 'fire', yinYang: 1 }, { char: '午', element: 'fire', yinYang: 0 }, { char: '未', element: 'earth', yinYang: 0 }, { char: '申', element: 'metal', yinYang: 1 }, { char: '酉', element: 'metal', yinYang: 0 }, { char: '戌', element: 'earth', yinYang: 1 }, { char: '亥', element: 'water', yinYang: 1 }
+];
+
+export const gapjaArray = [
+  "甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛미", "壬申", "癸酉", "甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰", "辛巳", "壬午", "癸未", "甲申", "乙酉", "丙戌", "丁亥", "戊子", "己丑", "庚寅", "辛卯", "壬辰", "癸巳", "甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑", "壬寅", "癸卯", "甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑", "甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥"
+];
+
 export const translateTenGods = (god, lang) => {
   if (lang === 'ko') return god;
-  
-  const map = {
-    '비견': translations.en.friend,
-    '겁재': translations.en.robWealth,
-    '식신': translations.en.eatingGod,
-    '상관': translations.en.hurtingOfficer,
-    '편재': translations.en.indirectWealth,
-    '정재': translations.en.directWealth,
-    '편관': translations.en.indirectOfficer,
-    '정관': translations.en.directOfficer,
-    '편인': translations.en.indirectResource,
-    '정인': translations.en.directResource,
-  };
-  
+  const map = { '비견': translations.en.friend, '겁재': translations.en.robWealth, '식신': translations.en.eatingGod, '상관': translations.en.hurtingOfficer, '편재': translations.en.indirectWealth, '정재': translations.en.directWealth, '편관': translations.en.indirectOfficer, '정관': translations.en.directOfficer, '편인': translations.en.indirectResource, '정인': translations.en.directResource };
   return map[god] || god;
 };
 
 export const translateTwelveStages = (stage, lang) => {
   if (lang === 'ko') return stage;
-  
-  const map = {
-    '장생': translations.en.stageBirth,
-    '목욕': translations.en.stageBath,
-    '관대': translations.en.stageYouth,
-    '건록': translations.en.stageOfficial,
-    '제왕': translations.en.stageProsperous,
-    '쇠': translations.en.stageDecline,
-    '병': translations.en.stageSick,
-    '사': translations.en.stageDeath,
-    '묘': translations.en.stageTomb,
-    '절': translations.en.stageExtinct,
-    '태': translations.en.stageConceive,
-    '양': translations.en.stageNourish,
-  };
-  
+  const map = { '장생': translations.en.stageBirth, '목욕': translations.en.stageBath, '관대': translations.en.stageYouth, '건록': translations.en.stageOfficial, '제왕': translations.en.stageProsperous, '쇠': translations.en.stageDecline, '병': translations.en.stageSick, '사': translations.en.stageDeath, '묘': translations.en.stageTomb, '절': translations.en.stageExtinct, '태': translations.en.stageConceive, '양': translations.en.stageNourish };
   return map[stage] || stage;
 };
