@@ -1,6 +1,6 @@
 export const translations = {
   ko: {
-    appName: "새로운 사주를 입력하세요", name: "이름", gender: "성별", male: "남자", female: "여자", calendar: "달력", solar: "양력", lunar: "음력", leapMonth: "평/윤달", normalMonth: "평달", isLeapMonth: "윤달", birthDate: "생년월일", birthTime: "출생시간", birthDatePlaceholder: "예: 19881230", birthTimePlaceholder: "예: 1459", unknownTime: "시간모름 (선택)", directInput: "직접입력", zodiacTime: "12지시", lookup: "사주조회", savedHistory: "저장된 사주 보기", historyTitle: "사주 저장 목록", searchPlaceholder: "이름으로 검색...", sortLatest: "최신순 ↓", sortOldest: "오래된순 ↑", delete: "삭제", deleteAll: "기록 전체 삭제", back: "뒤로가기", noHistory: "저장된 사주 정보가 없습니다.", creatorInfo: "만든 사람 정보", translateBtn: "번역기로 보기 (Translate)", copiedAndTranslate: "복사 완료! 구글 번역기를 엽니다...",
+    appName: "새로운 사주를 입력하세요", name: "이름", gender: "성별", male: "남자", female: "여자", calendar: "달력", solar: "양력", lunar: "음력", leapMonth: "평/윤달", normalMonth: "평달", isLeapMonth: "윤달", birthDate: "생년월일", birthTime: "출생시간", birthDatePlaceholder: "예: 19881230", birthTimePlaceholder: "예: 1459", unknownTime: "시간모름 (선택)", directInput: "시간", zodiacTime: "12지시", lookup: "사주조회", savedHistory: "저장된 사주 보기", historyTitle: "사주 저장 목록", searchPlaceholder: "이름으로 검색...", sortLatest: "최신순 ↓", sortOldest: "오래된순 ↑", delete: "삭제", deleteAll: "기록 전체 삭제", back: "뒤로가기", noHistory: "저장된 사주 정보가 없습니다.", creatorInfo: "만든 사람 정보", translateBtn: "번역기로 보기 (Translate)", copiedAndTranslate: "복사 완료! 구글 번역기를 엽니다...",
     hourPillar: "시주", dayPillar: "일주", monthPillar: "월주", yearPillar: "년주", dayMaster: "일간(나)", unknown: "모름", age: "만", ageSuffix: "세", daewunTitle: "대운", sewunTitle: "세운", wolunTitle: "절운",
     friend: "비견", robWealth: "겁재", eatingGod: "식신", hurtingOfficer: "상관", indirectWealth: "편재", directWealth: "정재", indirectOfficer: "편관", directOfficer: "정관", indirectResource: "편인", directResource: "정인",
     stageBirth: "장생", stageBath: "목욕", stageYouth: "관대", stageOfficial: "건록", stageProsperous: "제왕", stageDecline: "쇠", stageSick: "병", stageDeath: "사", stageTomb: "묘", stageExtinct: "절", stageConceive: "태", stageNourish: "양",
@@ -24,7 +24,7 @@ export const branches = [
 ];
 
 export const gapjaArray = [
-  "甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛미", "壬申", "癸酉", "甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰", "辛巳", "壬午", "癸未", "甲申", "乙酉", "丙戌", "丁亥", "戊子", "己丑", "庚寅", "辛卯", "壬辰", "癸巳", "甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑", "壬寅", "癸卯", "甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑", "甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥"
+  "甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未", "壬申", "癸酉", "甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰", "辛巳", "壬午", "癸未", "甲申", "乙酉", "丙戌", "丁亥", "戊子", "己丑", "庚寅", "辛卯", "壬辰", "癸巳", "甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑", "壬寅", "癸卯", "甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑", "甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥"
 ];
 
 export const translateTenGods = (god, lang) => {

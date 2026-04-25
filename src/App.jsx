@@ -59,7 +59,6 @@ function App() {
       const currentYear = new Date().getFullYear();
       const currentAge = calculateInternationalAge(formData.birthDate);
 
-      // 정밀 대운수 계산 (변환된 양력 날짜 기반)
       const solarDateStr = `${year}${String(month).padStart(2, '0')}${String(day).padStart(2, '0')}`;
       const dInfo = calculateDaewunStartAge(
         solarDateStr,
@@ -68,8 +67,6 @@ function App() {
         formData.gender
       );
       
-      console.log("App: Calculated Daewun Info:", dInfo);
-
       const activeDaewunAge = currentAge >= dInfo.age
         ? Math.floor((currentAge - dInfo.age) / 10) * 10 + dInfo.age
         : dInfo.age;
@@ -116,23 +113,35 @@ function App() {
     handleLookup(item);
   };
 
+  const headerButtons = (
+    <div style={{ padding: '20px 20px 15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <button onClick={() => setView(view === 'history' ? 'input' : 'history')} className="btn-secondary">
+        {view === 'history' ? t.back : (view === 'result' ? t.newLookup : t.savedHistory)}
+      </button>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <button onClick={toggleLanguage} className="btn-lang">{language === 'ko' ? 'EN' : '한글'}</button>
+        <div onClick={() => setShowCreatorInfo(true)} className="icon-info">i</div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="app-container">
       <div className="portrait-alert">{t.portraitWarning}</div>
+      
+      {/* 전역 헤더 버튼 (입력 및 결과 화면 모두 표시) */}
+      {view !== 'history' && headerButtons}
+
       {view === 'input' && (
-        <>
-          <div style={{ padding: '15px 20px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <button onClick={() => setView('history')} className="btn-secondary">{t.savedHistory}</button>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <button onClick={toggleLanguage} className="btn-lang">{language === 'ko' ? 'EN' : 'KO'}</button>
-              <div onClick={() => setShowCreatorInfo(true)} className="icon-info">i</div>
-            </div>
-          </div>
-          <SajuInputForm onSubmit={handleLookup} />
-        </>
+        <SajuInputForm onSubmit={handleLookup} />
       )}
 
-      {view === 'history' && <SajuHistory onSelect={handleSelectFromHistory} onBack={() => setView('input')} />}
+      {view === 'history' && (
+        <>
+          {headerButtons}
+          <SajuHistory onSelect={handleSelectFromHistory} onBack={() => setView('input')} />
+        </>
+      )}
       
       {view === 'result' && sajuData && userInfo && (
         <>

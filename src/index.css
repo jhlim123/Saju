@@ -9,20 +9,20 @@
   --border-color: rgba(0, 0, 0, 0.08);
   --accent-color: #1d1d1f;
   
-  /* Five Elements - Original Vibrant Colors */
-  --wood-bg: #4ade80;
-  --wood-text: #000000;
+  /* Five Elements - Enhanced Premium Colors */
+  --wood-bg: #22c55e;
+  --wood-text: #ffffff;
   
   --fire-bg: #ef4444;
   --fire-text: #ffffff;
   
-  --earth-bg: #facc15;
-  --earth-text: #000000;
+  --earth-bg: #eab308;
+  --earth-text: #ffffff;
   
-  --metal-bg: #ffffff;
-  --metal-text: #000000;
+  --metal-bg: #f8fafc;
+  --metal-text: #1e293b;
   
-  --water-bg: #374151;
+  --water-bg: #1e293b;
   --water-text: #ffffff;
 }
 
@@ -98,16 +98,22 @@ body {
 
 /* Saju Box Styles */
 .saju-box {
-  border: 1px solid var(--border-color);
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: 1.45rem;
+  font-weight: 700;
   height: 56px;
   width: 56px;
-  margin: 4px auto;
-  border-radius: 14px;
+  margin: 6px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s;
+}
+
+.saju-box:hover {
+  transform: scale(1.05);
 }
 
 @media (max-width: 320px) {
@@ -119,11 +125,24 @@ body {
   }
 }
 
-.wood { background-color: var(--wood-bg); color: var(--wood-text); }
-.fire { background-color: var(--fire-bg); color: var(--fire-text); }
-.earth { background-color: var(--earth-bg); color: var(--earth-text); }
-.metal { background-color: var(--metal-bg); color: var(--metal-text); border: 1px solid #cbd5e1; }
-.water { background-color: var(--water-bg); color: var(--water-text); }
+.manseryeok-container {
+  padding: 30px 24px;
+}
+
+.element-wood { background-color: var(--wood-bg); color: var(--wood-text); }
+.element-fire { background-color: var(--fire-bg); color: var(--fire-text); }
+.element-earth { background-color: var(--earth-bg); color: var(--earth-text); }
+.element-metal { background-color: var(--metal-bg); color: var(--metal-text); border: 1.5px solid #cbd5e1; }
+.element-water { background-color: var(--water-bg); color: var(--water-text); }
+
+.saju-box-mini {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
 
 /* Table styles for Manseryeok */
 .saju-table {
@@ -209,4 +228,63 @@ body {
   .profile-date {
     font-size: 0.75rem !important;
   }
+}
+/* UI Buttons & Icons */
+.btn-secondary {
+  padding: 10px 20px;
+  background: #f5f5f7;
+  color: #1d1d1f;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.btn-secondary:hover {
+  background: #e5e5ea;
+  transform: translateY(-1px);
+}
+
+.btn-lang {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid #d1d1d6;
+  border-radius: 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1d1d1f;
+  transition: all 0.2s;
+}
+.btn-lang:hover {
+  background: #f5f5f7;
+}
+
+.icon-info {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #d1d1d6;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #86868b;
+  transition: all 0.2s;
+  background-color: transparent;
+}
+.icon-info:hover {
+  background: #f5f5f7;
+}
+
+.divider {
+  border: none;
+  border-top: 2px dashed #e5e7eb;
+  margin: 20px;
 }

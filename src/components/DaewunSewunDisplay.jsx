@@ -1,22 +1,7 @@
 import { useRef, useEffect } from 'react';
-import { calculateSewun, calculateWolun, getTenGods, getTwelveStages, getShensha } from '../utils/sajuLogic';
+import { calculateSewun, calculateWolun, getTenGods, getTwelveStages, getShensha, getElementClass } from '../utils/sajuLogic';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations, translateTenGods, translateTwelveStages } from '../utils/translations';
-
-const getElementClass = (char) => {
-  const wood = ['甲', '乙', '寅', '卯'];
-  const fire = ['丙', '丁', '巳', '午'];
-  const earth = ['戊', '己', '辰', '戌', '丑', '未'];
-  const metal = ['庚', '辛', '申', '酉'];
-  const water = ['壬', '癸', '亥', '子'];
-  
-  if (wood.includes(char)) return 'wood';
-  if (fire.includes(char)) return 'fire';
-  if (earth.includes(char)) return 'earth';
-  if (metal.includes(char)) return 'metal';
-  if (water.includes(char)) return 'water';
-  return '';
-};
 
 export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunAge, selectedSewunYear, onSelectSewun }) {
   const { language } = useLanguage();
@@ -73,10 +58,14 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
                     ref={sw.year === currentYear ? sewunRef : null}
                     style={{ 
                       cursor: 'pointer', 
-                      backgroundColor: sw.year === selectedSewunYear ? '#ecfdf5' : 'transparent',
-                      borderBottom: sw.year === selectedSewunYear ? '3px solid #10b981' : 'none'
+                      backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
+                      borderBottom: sw.year === selectedSewunYear ? '3px solid #3b82f6' : 'none',
+                      transition: 'all 0.2s'
                     }}>
-                  {sw.year}<br/>{getTenGods(dayStem, sw.stem)}
+                  {sw.year}<br/>
+                  <span style={{ color: `var(--${getElementClass(sw.stem).replace('element-', '')}-text)`, fontSize: '0.8rem' }}>
+                    {getTenGods(dayStem, sw.stem)}
+                  </span>
                 </th>
               ))}
             </tr>
@@ -86,7 +75,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
               {sewunList.map((sw, i) => (
                 <td key={i} 
                     onClick={() => onSelectSewun(sw.year)}
-                    style={{ cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? '#ecfdf5' : 'transparent' }}>
+                    style={{ cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.05)' : 'transparent' }}>
                   <div className={`saju-box ${getElementClass(sw.stem)}`}>{sw.stem}</div>
                 </td>
               ))}
@@ -95,7 +84,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
               {sewunList.map((sw, i) => (
                 <td key={i} 
                     onClick={() => onSelectSewun(sw.year)}
-                    style={{ cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? '#ecfdf5' : 'transparent' }}>
+                    style={{ cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.05)' : 'transparent', transition: 'all 0.2s' }}>
                   <div className={`saju-box ${getElementClass(sw.branch)}`}>{sw.branch}</div>
                 </td>
               ))}
@@ -106,8 +95,11 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
                 return (
                   <td key={i} 
                       onClick={() => onSelectSewun(sw.year)}
-                      style={{ paddingTop: '8px', cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? '#ecfdf5' : 'transparent' }}>
-                    {getTenGods(dayStem, sw.branch)}<br/>{getTwelveStages(dayStem, sw.branch)}<br/>
+                      style={{ paddingTop: '8px', cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.05)' : 'transparent', transition: 'all 0.2s' }}>
+                    <span style={{ color: `var(--${getElementClass(sw.branch).replace('element-', '')}-text)`, fontWeight: '600' }}>
+                      {getTenGods(dayStem, sw.branch)}
+                    </span><br/>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>{getTwelveStages(dayStem, sw.branch)}</span><br/>
                     {ss.length > 0 ? ss.map((s, idx) => <div key={idx} style={{fontSize: '0.75rem', color: '#6366f1'}}>{s}</div>) : '-'}
                   </td>
                 );
@@ -129,7 +121,10 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
             <tr style={{ fontSize: '0.85rem' }}>
               {wolunList.map((ww, i) => (
                 <th key={i} ref={ww.month === currentMonth ? wolunRef : null}>
-                  {language === 'ko' ? `${ww.month}월(${ww.jeolgi})` : `${monthEn[ww.month]}(${ww.jeolgi})`}<br/>{getTenGods(dayStem, ww.stem)}
+                  {language === 'ko' ? `${ww.month}월(${ww.jeolgi})` : `${monthEn[ww.month]}(${ww.jeolgi})`}<br/>
+                  <span style={{ color: `var(--${getElementClass(ww.stem).replace('element-', '')}-text)`, fontSize: '0.8rem' }}>
+                    {getTenGods(dayStem, ww.stem)}
+                  </span>
                 </th>
               ))}
             </tr>
@@ -150,7 +145,10 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
                 const ss = getShensha(dayStem, ww.stem, ww.branch, birthYearBranch);
                 return (
                   <td key={i} style={{ paddingTop: '8px' }}>
-                    {getTenGods(dayStem, ww.branch)}<br/>{getTwelveStages(dayStem, ww.branch)}<br/>
+                    <span style={{ color: `var(--${getElementClass(ww.branch).replace('element-', '')}-text)`, fontWeight: '600' }}>
+                      {getTenGods(dayStem, ww.branch)}
+                    </span><br/>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>{getTwelveStages(dayStem, ww.branch)}</span><br/>
                     {ss.length > 0 ? ss.map((s, idx) => <div key={idx} style={{fontSize: '0.7rem', color: '#6366f1'}}>{s}</div>) : '-'}
                   </td>
                 );

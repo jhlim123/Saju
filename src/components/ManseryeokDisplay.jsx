@@ -60,14 +60,13 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
 
   return (
     <div className="manseryeok-container card animate-fade-in">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
         <div>
-          <h2 style={{ margin: 0, fontSize: '1.4rem', color: 'var(--text-primary)' }}>{userInfo.name} {t.sajuResult}</h2>
-          <p style={{ margin: '5px 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+          <h2 style={{ margin: '0 0 8px 0', fontSize: '1.5rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{userInfo.name} {t.sajuResult}</h2>
+          <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.5' }}>
             {formattedDate} {formattedTime} ({userInfo.calendar === 'solar' ? t.solar : t.lunar}) / {userInfo.gender === 'male' ? t.male : t.female}
           </p>
         </div>
-        <button onClick={onShowCreatorInfo} className="btn-creator-info">{t.creatorInfo}</button>
       </div>
 
       <div style={{ overflowX: 'auto', marginBottom: '25px' }}>
@@ -77,7 +76,10 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
           </thead>
           <tbody>
             <tr className="saju-row-label">
-              <td>{getTenGods(dayStem, hourStem)}</td><td>{t.dayMaster}</td><td>{getTenGods(dayStem, monthStem)}</td><td>{getTenGods(dayStem, yearStem)}</td>
+              <td style={{ color: `var(--${getElementClass(hourStem).replace('element-', '')}-text)`, fontWeight: '600' }}>{getTenGods(dayStem, hourStem)}</td>
+              <td style={{ color: 'var(--text-primary)', fontWeight: 'bold' }}>{t.dayMaster}</td>
+              <td style={{ color: `var(--${getElementClass(monthStem).replace('element-', '')}-text)`, fontWeight: '600' }}>{getTenGods(dayStem, monthStem)}</td>
+              <td style={{ color: `var(--${getElementClass(yearStem).replace('element-', '')}-text)`, fontWeight: '600' }}>{getTenGods(dayStem, yearStem)}</td>
             </tr>
             <tr>
               <td><div className={`saju-box ${getElementClass(hourStem)}`}>{hourStem}</div></td>
@@ -92,10 +94,22 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
               <td><div className={`saju-box ${getElementClass(yearBranch)}`}>{yearBranch}</div></td>
             </tr>
             <tr className="saju-row-footer">
-              <td>{getTenGods(dayStem, hourBranch)}<br/>{getTwelveStages(dayStem, hourBranch)}</td>
-              <td>{getTenGods(dayStem, dayBranch)}<br/>{getTwelveStages(dayStem, dayBranch)}</td>
-              <td>{getTenGods(dayStem, monthBranch)}<br/>{getTwelveStages(dayStem, monthBranch)}</td>
-              <td>{getTenGods(dayStem, yearBranch)}<br/>{getTwelveStages(dayStem, yearBranch)}</td>
+              <td style={{ fontSize: '0.85rem' }}>
+                <span style={{ color: `var(--${getElementClass(hourBranch).replace('element-', '')}-text)`, fontWeight: '600' }}>{getTenGods(dayStem, hourBranch)}</span><br/>
+                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, hourBranch)}</span>
+              </td>
+              <td style={{ fontSize: '0.85rem' }}>
+                <span style={{ color: `var(--${getElementClass(dayBranch).replace('element-', '')}-text)`, fontWeight: '600' }}>{getTenGods(dayStem, dayBranch)}</span><br/>
+                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, dayBranch)}</span>
+              </td>
+              <td style={{ fontSize: '0.85rem' }}>
+                <span style={{ color: `var(--${getElementClass(monthBranch).replace('element-', '')}-text)`, fontWeight: '600' }}>{getTenGods(dayStem, monthBranch)}</span><br/>
+                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, monthBranch)}</span>
+              </td>
+              <td style={{ fontSize: '0.85rem' }}>
+                <span style={{ color: `var(--${getElementClass(yearBranch).replace('element-', '')}-text)`, fontWeight: '600' }}>{getTenGods(dayStem, yearBranch)}</span><br/>
+                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, yearBranch)}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -125,7 +139,10 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
                   <th key={idx} onClick={() => onSelectDaewun(dw.age)} ref={active ? activeDaewunRef : null}
                       className={dw.age === selectedDaewunAge ? 'selected-dw' : ''}
                       style={{ color: active ? 'var(--text-primary)' : '#888' }}>
-                    {dw.age}<br/>{getTenGods(dayStem, dw.stem)}
+                    {dw.age}<br/>
+                    <span style={{ color: active ? `var(--${getElementClass(dw.stem).replace('element-', '')}-text)` : '#aaa', fontSize: '0.8rem' }}>
+                      {getTenGods(dayStem, dw.stem)}
+                    </span>
                   </th>
                 );
               })}
@@ -149,7 +166,10 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
             <tr style={{ fontSize: '0.85rem', color: '#666' }}>
               {daewunList.map((dw, idx) => (
                 <td key={idx} onClick={() => onSelectDaewun(dw.age)} className={dw.age === selectedDaewunAge ? 'selected-dw' : ''}>
-                  {getTenGods(dayStem, dw.branch)}<br/>{getTwelveStages(dayStem, dw.branch)}
+                  <span style={{ color: `var(--${getElementClass(dw.branch).replace('element-', '')}-text)`, fontWeight: '600' }}>
+                    {getTenGods(dayStem, dw.branch)}
+                  </span><br/>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, dw.branch)}</span>
                 </td>
               ))}
             </tr>

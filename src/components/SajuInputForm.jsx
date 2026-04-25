@@ -88,9 +88,9 @@ export default function SajuInputForm({ onSubmit }) {
                 ))}
               </select>
             )}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '80px' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{knowTime ? t.directInput : t.zodiacTime}</span>
-              <div onClick={() => { setKnowTime(!knowTime); }} style={{ width: '50px', height: '30px', background: knowTime ? '#34c759' : '#e5e5ea', borderRadius: '15px', position: 'relative', cursor: 'pointer', transition: '0.2s' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '95px' }}>
+              <span style={{ fontSize: '0.9rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>{knowTime ? t.directInput : t.zodiacTime}</span>
+              <div onClick={() => { setKnowTime(!knowTime); }} style={{ width: '50px', height: '30px', background: knowTime ? '#34c759' : '#e5e5ea', borderRadius: '15px', position: 'relative', cursor: 'pointer', transition: '0.2s', flexShrink: 0 }}>
                 <div style={{ position: 'absolute', top: '2px', left: knowTime ? '22px' : '2px', width: '26px', height: '26px', background: 'white', borderRadius: '50%', boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 3px 1px rgba(0,0,0,0.06)', transition: '0.2s' }}></div>
               </div>
             </div>

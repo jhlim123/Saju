@@ -1,4 +1,4 @@
-import { getInterpretation, getCurrentLuckInterpretation } from '../utils/sajuLogic';
+import { getInterpretation, getCurrentLuckInterpretation, getElementClass } from '../utils/sajuLogic';
 import { getPersonalityAnalysis } from '../utils/personalityLogic';
 import { getFullAnalysis } from '../utils/fullAnalysis';
 import { generateExpertPrompt } from '../utils/aiPromptGenerator';
@@ -25,8 +25,35 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
     '火': { bg: 'var(--fire-bg)', text: 'var(--fire-text)' },
     '土': { bg: 'var(--earth-bg)', text: 'var(--earth-text)' },
     '金': { bg: 'var(--metal-bg)', text: 'var(--metal-text)' },
-    '수': { bg: 'var(--water-bg)', text: 'var(--water-text)' }, // Backwards compatibility for Ko names if any
     '水': { bg: 'var(--water-bg)', text: 'var(--water-text)' }
+  };
+
+  const renderColoredHanja = (char, label) => {
+    const elClass = getElementClass(char);
+    return (
+      <span style={{ 
+        display: 'inline-flex', 
+        alignItems: 'center', 
+        gap: '4px',
+        padding: '2px 8px',
+        borderRadius: '8px',
+        backgroundColor: 'var(--bg-color)',
+        border: '1px solid var(--border-color)',
+        fontSize: '0.9rem'
+      }}>
+        <span className={`saju-box-mini ${elClass}`} style={{ 
+          width: '24px', 
+          height: '24px', 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          borderRadius: '6px',
+          fontSize: '0.85rem',
+          fontWeight: 'bold'
+        }}>{char}</span>
+        {label && <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{label}</span>}
+      </span>
+    );
   };
 
   if (!sajuData || !userInfo) return null;
@@ -64,11 +91,11 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
             </button>
           )}
           <div style={{ marginBottom: '14px', padding: '14px', background: 'var(--bg-color)', borderRadius: '16px' }}>
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '600', marginBottom: '6px' }}>일간({personality.dayStem}) — 타고난 본성</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '600', marginBottom: '6px' }}>일간 {renderColoredHanja(personality.dayStem)} — 타고난 본성</div>
             <p style={{ margin: 0, lineHeight: '1.7', fontSize: '0.95rem', color: 'var(--text-secondary)', wordBreak: 'keep-all' }}>{personality.core}</p>
           </div>
           <div style={{ marginBottom: '14px', padding: '14px', background: 'var(--bg-color)', borderRadius: '16px' }}>
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '600', marginBottom: '6px' }}>월지({personality.monthBranch} · {personality.season}) — 사회적 성격</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '600', marginBottom: '6px' }}>월지 {renderColoredHanja(personality.monthBranch, personality.season)} — 사회적 성격</div>
             <p style={{ margin: 0, lineHeight: '1.7', fontSize: '0.95rem', color: 'var(--text-secondary)', wordBreak: 'keep-all' }}>{personality.social}</p>
           </div>
           <div style={{ marginBottom: '14px', padding: '14px', background: 'var(--bg-color)', borderRadius: '16px' }}>
@@ -104,7 +131,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
 
           {/* 1. 일주 기질 */}
           <div style={{ marginBottom: '12px', padding: '16px', backgroundColor: 'var(--surface-color)', borderRadius: '20px', border: '1px solid var(--border-color)', boxShadow: '0 2px 10px rgba(0,0,0,0.02)' }}>
-            <div style={{ color: 'var(--text-primary)', fontWeight: '600', fontSize: '0.95rem', marginBottom: '6px' }}>① 일주({fullAnalysis.dayPillar}) — 본연의 기질과 중심 성격</div>
+            <div style={{ color: 'var(--text-primary)', fontWeight: '600', fontSize: '0.95rem', marginBottom: '6px' }}>① 일주 {renderColoredHanja(fullAnalysis.dayPillar[0])}{renderColoredHanja(fullAnalysis.dayPillar[1])} — 본연의 기질과 중심 성격</div>
             <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7', fontSize: '0.95rem', margin: 0, wordBreak: 'keep-all' }}>{fullAnalysis.dayPillarInfo}</p>
           </div>
 
