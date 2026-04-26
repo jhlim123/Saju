@@ -60,7 +60,7 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
     if (activeDaewunRef.current) {
       activeDaewunRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
-  }, [userInfo.birthDate]);
+  }, [userInfo.birthDate, selectedDaewunAge]);
 
   return (
     <div className="manseryeok-container card animate-fade-in">
@@ -154,8 +154,10 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
               {daewunList.map((dw, idx) => {
                 const isCurrent = isActiveDaewun(dw.age);
                 const isSelected = dw.age === selectedDaewunAge;
+                // 우선순위: 선택된 대운 > 현재 대운
+                const isRefTarget = selectedDaewunAge !== undefined ? isSelected : isCurrent;
                 return (
-                   <th key={idx} onClick={() => onSelectDaewun(dw.age)} ref={isCurrent ? activeDaewunRef : null}
+                   <th key={idx} onClick={() => onSelectDaewun(dw.age)} ref={isRefTarget ? activeDaewunRef : null}
                       className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
                       style={{ cursor: 'pointer', color: (isCurrent || isSelected) ? 'var(--text-primary)' : '#888' }}>
                     {isCurrent ? (

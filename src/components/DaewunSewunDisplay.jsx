@@ -15,7 +15,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
     if (sewunRef.current) {
       sewunRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
-  }, [selectedDaewunAge]);
+  }, [selectedDaewunAge, selectedSewunYear]);
 
   useEffect(() => {
     if (wolunRef.current) {
@@ -58,7 +58,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
                 return (
                   <th key={i} 
                       onClick={() => onSelectSewun(sw.year)}
-                      ref={isCurrent ? sewunRef : null}
+                      ref={selectedSewunYear === sw.year ? sewunRef : (sw.year === currentYear && !selectedSewunYear ? sewunRef : null)}
                       className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
                       style={{ cursor: 'pointer', transition: 'all 0.2s' }}>
                     {isCurrent ? (
