@@ -41,15 +41,31 @@ function App() {
   const t = translations[language];
 
   const handleLookup = (formData) => {
-    if (!formData.birthDate || formData.birthDate.length !== 8) {
-      alert("생년월일 8자리를 입력해주세요. (예: 19881230)");
+    let birthDate = formData.birthDate;
+    let birthTime = formData.birthTime;
+
+    // Legacy format support: convert YYYYMMDD to YYYY-MM-DD
+    if (birthDate && birthDate.length === 8 && !birthDate.includes('-')) {
+      birthDate = `${birthDate.substring(0, 4)}-${birthDate.substring(4, 6)}-${birthDate.substring(6, 8)}`;
+    }
+    // Legacy format support: convert HHMM to HH:mm
+    if (birthTime && birthTime.length === 4 && !birthTime.includes(':')) {
+      birthTime = `${birthTime.substring(0, 2)}:${birthTime.substring(2, 4)}`;
+    }
+
+    const dateParts = birthDate ? birthDate.split('-') : [];
+    if (dateParts.length !== 3) {
+      alert(language === 'ko' ? "생년월일을 정확히 선택해주세요." : "Please select birth date correctly.");
       return;
     }
     
-    let year = parseInt(formData.birthDate.substring(0, 4));
-    let month = parseInt(formData.birthDate.substring(4, 6));
-    let day = parseInt(formData.birthDate.substring(6, 8));
+    let year = parseInt(dateParts[0]);
+    let month = parseInt(dateParts[1]);
+    let day = parseInt(dateParts[2]);
     
+    // Internal 8-digit string for some utility functions
+    const internalBirthDateStr = `${year}${String(month).padStart(2, '0')}${String(day).padStart(2, '0')}`;
+
     if (formData.calendarType === 'lunar') {
       try {
         const result = robustLunarToSolar(year, month, day, formData.leapMonth === 'leap');
@@ -57,39 +73,42 @@ function App() {
         month = result.solar.month;
         day = result.solar.day;
       } catch (e) {
-        alert(e.message);
+        alert(language === 'ko' ? `음력 변환 오류: ${e.message}` : `Lunar conversion error: ${e.message}`);
         return;
       }
     }
     
     let hour = undefined;
     let minute = undefined;
+    let internalBirthTimeStr = '';
     
     if (formData.knowTime) {
-      if (formData.birthTime && formData.birthTime.length >= 4) {
-        hour = parseInt(formData.birthTime.substring(0, 2));
-        minute = parseInt(formData.birthTime.substring(2, 4));
+      const timeParts = birthTime ? birthTime.split(':') : [];
+      if (timeParts.length === 2) {
+        hour = parseInt(timeParts[0]);
+        minute = parseInt(timeParts[1]);
+        internalBirthTimeStr = `${String(hour).padStart(2, '0')}${String(minute).padStart(2, '0')}`;
       }
     } else if (formData.birthBranch) {
-      // 12지시를 시간으로 변환 (중간 시간 기준)
       const branchTimeMap = {
-        '자': { h: 0, m: 0 },   // 23:30 ~ 01:30
-        '축': { h: 2, m: 30 },  // 01:30 ~ 03:30
-        '인': { h: 4, m: 30 },  // 03:30 ~ 05:30
-        '묘': { h: 6, m: 30 },  // 05:30 ~ 07:30
-        '진': { h: 8, m: 30 },  // 07:30 ~ 09:30
-        '사': { h: 10, m: 30 }, // 09:30 ~ 11:30
-        '오': { h: 12, m: 30 }, // 11:30 ~ 13:30
-        '미': { h: 14, m: 30 }, // 13:30 ~ 15:30
-        '신': { h: 16, m: 30 }, // 15:30 ~ 17:30
-        '유': { h: 18, m: 30 }, // 17:30 ~ 19:30
-        '술': { h: 20, m: 30 }, // 19:30 ~ 21:30
-        '해': { h: 22, m: 30 }  // 21:30 ~ 23:30
+        '자': { h: 0, m: 0 },
+        '축': { h: 2, m: 30 },
+        '인': { h: 4, m: 30 },
+        '묘': { h: 6, m: 30 },
+        '진': { h: 8, m: 30 },
+        '사': { h: 10, m: 30 },
+        '오': { h: 12, m: 30 },
+        '미': { h: 14, m: 30 },
+        '신': { h: 16, m: 30 },
+        '유': { h: 18, m: 30 },
+        '술': { h: 20, m: 30 },
+        '해': { h: 22, m: 30 }
       };
       const time = branchTimeMap[formData.birthBranch];
       if (time) {
         hour = time.h;
         minute = time.m;
+        internalBirthTimeStr = `${String(hour).padStart(2, '0')}${String(minute).padStart(2, '0')}`;
       }
     }
 
@@ -98,16 +117,14 @@ function App() {
       setSajuData(saju);
 
       const currentYear = new Date().getFullYear();
-      const currentAge = calculateInternationalAge(formData.birthDate);
+      // Use internal format for utility functions
+      const currentAge = calculateInternationalAge(internalBirthDateStr);
 
       const solarDateStr = `${year}${String(month).padStart(2, '0')}${String(day).padStart(2, '0')}`;
       
-      // 시간 문자열 생성 (시주 계산용)
-      const timeStr = hour !== undefined ? `${String(hour).padStart(2, '0')}${String(minute).padStart(2, '0')}` : '';
-      
       const dInfo = calculateDaewunStartAge(
         solarDateStr,
-        timeStr,
+        internalBirthTimeStr,
         saju,
         formData.gender
       );
@@ -119,22 +136,40 @@ function App() {
       setSelectedDaewunAge(activeDaewunAge);
       setSelectedSewunYear(currentYear);
 
-      // 음력 변환 정보 포함
-      let lunarInfo = null;
-      if (formData.calendarType === 'solar') {
-        // 양력 입력인 경우 음력 정보도 가져옴 (필요 시)
-        // 여기서는 일단 입력된 타입을 존중
+      const branchNames = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
+      let zodiacSign = formData.birthBranch || "";
+      if (formData.knowTime && hour !== undefined) {
+          const h = (hour * 60 + minute + 30) % 1440; 
+          const idx = Math.floor(h / 120);
+          zodiacSign = branchNames[idx];
+      }
+
+      // 음력 정보 추출 (양력 입력 시에도 계산)
+      let lunarDateStr = "";
+      try {
+        const mIdx = getMonthlyIndex(year, month);
+        const entry = mIdx?.entries.find(e => e.solar.year === year && e.solar.month === month && e.solar.day === day);
+        if (entry) {
+          const l = entry.lunar;
+          lunarDateStr = `${l.year}-${String(l.month).padStart(2, '0')}-${String(l.day).padStart(2, '0')}${l.isLeap ? '(윤)' : ''}`;
+        }
+      } catch (err) {
+        console.error("Lunar conversion error for history:", err);
       }
 
       const newUserInfo = {
         ...formData,
+        birthDate: internalBirthDateStr,
+        birthTime: internalBirthTimeStr,
         solarYear: year,
         solarMonth: month,
         solarDay: day,
         solarHour: hour,
         solarMinute: minute,
+        lunarDateStr: lunarDateStr,
+        zodiacSign: zodiacSign,
         daewunInfo: dInfo,
-        version: "1.1.6-precise"
+        version: "1.1.9-history-complete"
       };
       
       setUserInfo(newUserInfo);
@@ -142,7 +177,7 @@ function App() {
       saveToHistory(newUserInfo);
     } catch (e) {
       console.error("App Error:", e);
-      alert("오류가 발생했습니다: " + e.message);
+      alert(language === 'ko' ? "사주 분석 중 오류가 발생했습니다: " + e.message : "Error during analysis: " + e.message);
     }
   };
 

@@ -149,24 +149,97 @@ body {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 20px;
 }
 
 .saju-table th {
-  padding: 8px 4px;
-  font-weight: normal;
-  font-size: 0.95rem;
+  padding: 12px 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+  color: #6b7280;
+}
+
+.saju-table th:last-child {
+  border-right: none;
 }
 
 .saju-table td {
-  padding: 4px 2px;
+  padding: 10px 4px;
+  border-right: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.saju-table tr:last-child td {
+  border-bottom: none;
+}
+
+.saju-table td:last-child {
+  border-right: none;
+}
+
+.saju-row-label td {
+  font-size: 0.9rem;
+  padding: 12px 4px;
+  background-color: #ffffff;
+}
+
+.luck-item-selected {
+  background-color: rgba(99, 102, 241, 0.12) !important; /* Indigo background for selection */
+  position: relative;
+  transition: all 0.2s;
+}
+
+.luck-item-current {
+  background-color: rgba(59, 130, 246, 0.08) !important; /* Blue background for current */
+  position: relative;
+}
+
+.current-luck-tag {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3b82f6; /* Blue */
+  color: #ffffff;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: 800;
+  z-index: 10;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.02em;
+}
+
+.selected-luck-tag {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #6366f1; /* Indigo */
+  color: #ffffff;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: 800;
+  z-index: 11;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.02em;
 }
 
 /* Custom Scrollbar for horizontal scrolling tables */
 .horizontal-scroll {
   overflow-x: auto;
+  overflow-y: visible; /* Ensure absolute tags are not clipped vertically */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  padding-bottom: 5px;
+  padding: 18px 5px 10px; /* Top padding for tags */
 }
 
 .horizontal-scroll::-webkit-scrollbar {

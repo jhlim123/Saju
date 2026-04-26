@@ -49,53 +49,71 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
         {t.sewunTitle} ({selectedDaewunAge ? `${selectedDaewunAge}${t.ageSuffix} ${t.daewunTitle}` : (language === 'ko' ? '현재' : 'Current')})
       </div>
       <div className="horizontal-scroll" style={{ paddingBottom: '10px' }}>
-        <table className="saju-table" style={{ minWidth: '650px' }}>
+        <table className="saju-table" style={{ minWidth: '650px', border: 'none' }}>
           <thead>
             <tr style={{ fontSize: '0.9rem' }}>
-              {sewunList.map((sw, i) => (
-                <th key={i} 
-                    onClick={() => onSelectSewun(sw.year)}
-                    ref={sw.year === currentYear ? sewunRef : null}
-                    style={{ 
-                      cursor: 'pointer', 
-                      backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
-                      borderBottom: sw.year === selectedSewunYear ? '3px solid #3b82f6' : 'none',
-                      transition: 'all 0.2s'
-                    }}>
-                  {sw.year}<br/>
-                  <span style={{ color: getElementColor(sw.stem), fontSize: '0.8rem', fontWeight: '700' }}>
-                    {getTenGods(dayStem, sw.stem)}
-                  </span>
-                </th>
-              ))}
+              {sewunList.map((sw, i) => {
+                const isCurrent = sw.year === currentYear;
+                const isSelected = sw.year === selectedSewunYear;
+                return (
+                  <th key={i} 
+                      onClick={() => onSelectSewun(sw.year)}
+                      ref={isCurrent ? sewunRef : null}
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ cursor: 'pointer', transition: 'all 0.2s' }}>
+                    {isCurrent ? (
+                      <span className="current-luck-tag">{language === 'ko' ? '현재' : 'Now'}</span>
+                    ) : isSelected ? (
+                      <span className="selected-luck-tag">{language === 'ko' ? '선택' : 'Select'}</span>
+                    ) : null}
+                    {sw.year}<br/>
+                    <span style={{ color: getElementColor(sw.stem), fontSize: '0.8rem', fontWeight: '700' }}>
+                      {getTenGods(dayStem, sw.stem)}
+                    </span>
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
             <tr>
-              {sewunList.map((sw, i) => (
-                <td key={i} 
-                    onClick={() => onSelectSewun(sw.year)}
-                    style={{ cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.05)' : 'transparent' }}>
-                  <div className={`saju-box ${getElementClass(sw.stem)}`}>{sw.stem}</div>
-                </td>
-              ))}
+              {sewunList.map((sw, i) => {
+                const isCurrent = sw.year === currentYear;
+                const isSelected = sw.year === selectedSewunYear;
+                return (
+                  <td key={i} 
+                      onClick={() => onSelectSewun(sw.year)}
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ cursor: 'pointer' }}>
+                    <div className={`saju-box ${getElementClass(sw.stem)}`}>{sw.stem}</div>
+                  </td>
+                );
+              })}
             </tr>
             <tr>
-              {sewunList.map((sw, i) => (
-                <td key={i} 
-                    onClick={() => onSelectSewun(sw.year)}
-                    style={{ cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.05)' : 'transparent', transition: 'all 0.2s' }}>
-                  <div className={`saju-box ${getElementClass(sw.branch)}`}>{sw.branch}</div>
-                </td>
-              ))}
+              {sewunList.map((sw, i) => {
+                const isCurrent = sw.year === currentYear;
+                const isSelected = sw.year === selectedSewunYear;
+                return (
+                  <td key={i} 
+                      onClick={() => onSelectSewun(sw.year)}
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ cursor: 'pointer', transition: 'all 0.2s' }}>
+                    <div className={`saju-box ${getElementClass(sw.branch)}`}>{sw.branch}</div>
+                  </td>
+                );
+              })}
             </tr>
             <tr style={{ fontSize: '0.85rem', color: '#4b5563', lineHeight: '1.4' }}>
               {sewunList.map((sw, i) => {
                 const ss = getShensha(dayStem, sw.stem, sw.branch, birthYearBranch);
+                const isCurrent = sw.year === currentYear;
+                const isSelected = sw.year === selectedSewunYear;
                 return (
                   <td key={i} 
                       onClick={() => onSelectSewun(sw.year)}
-                      style={{ paddingTop: '8px', cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.05)' : 'transparent', transition: 'all 0.2s' }}>
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ paddingTop: '8px', cursor: 'pointer', transition: 'all 0.2s' }}>
                     <span style={{ color: getElementColor(sw.branch), fontWeight: '700' }}>
                       {getTenGods(dayStem, sw.branch)}
                     </span><br/>
@@ -116,35 +134,51 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
         {language === 'ko' ? `${selectedSewunYear}년 월운` : `${selectedSewunYear} ${t.wolunTitle}`}
       </div>
       <div className="horizontal-scroll" style={{ paddingBottom: '10px' }}>
-        <table className="saju-table" style={{ minWidth: '950px' }}>
+        <table className="saju-table" style={{ minWidth: '950px', border: 'none' }}>
           <thead>
             <tr style={{ fontSize: '0.85rem' }}>
-              {wolunList.map((ww, i) => (
-                <th key={i} ref={ww.month === currentMonth ? wolunRef : null}>
-                  {language === 'ko' ? `${ww.month}월(${ww.jeolgi})` : `${monthEn[ww.month]}(${ww.jeolgi})`}<br/>
-                  <span style={{ color: getElementColor(ww.stem), fontSize: '0.8rem', fontWeight: '700' }}>
-                    {getTenGods(dayStem, ww.stem)}
-                  </span>
-                </th>
-              ))}
+              {wolunList.map((ww, i) => {
+                const isCurrent = selectedSewunYear === currentYear && ww.month === currentMonth;
+                return (
+                  <th key={i} ref={isCurrent ? wolunRef : null}
+                      className={isCurrent ? 'luck-item-current' : ''}>
+                    {isCurrent && <span className="current-luck-tag">{language === 'ko' ? '현재' : 'Now'}</span>}
+                    {language === 'ko' ? `${ww.month}월(${ww.jeolgi})` : `${monthEn[ww.month]}(${ww.jeolgi})`}<br/>
+                    <span style={{ color: getElementColor(ww.stem), fontSize: '0.8rem', fontWeight: '700' }}>
+                      {getTenGods(dayStem, ww.stem)}
+                    </span>
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
             <tr>
-              {wolunList.map((ww, i) => (
-                <td key={i}><div className={`saju-box ${getElementClass(ww.stem)}`}>{ww.stem}</div></td>
-              ))}
+              {wolunList.map((ww, i) => {
+                const isCurrent = selectedSewunYear === currentYear && ww.month === currentMonth;
+                return (
+                  <td key={i} className={isCurrent ? 'luck-item-current' : ''}>
+                    <div className={`saju-box ${getElementClass(ww.stem)}`}>{ww.stem}</div>
+                  </td>
+                );
+              })}
             </tr>
             <tr>
-              {wolunList.map((ww, i) => (
-                <td key={i}><div className={`saju-box ${getElementClass(ww.branch)}`}>{ww.branch}</div></td>
-              ))}
+              {wolunList.map((ww, i) => {
+                const isCurrent = selectedSewunYear === currentYear && ww.month === currentMonth;
+                return (
+                  <td key={i} className={isCurrent ? 'luck-item-current' : ''}>
+                    <div className={`saju-box ${getElementClass(ww.branch)}`}>{ww.branch}</div>
+                  </td>
+                );
+              })}
             </tr>
             <tr style={{ fontSize: '0.8rem', color: '#4b5563', lineHeight: '1.4' }}>
               {wolunList.map((ww, i) => {
                 const ss = getShensha(dayStem, ww.stem, ww.branch, birthYearBranch);
+                const isCurrent = selectedSewunYear === currentYear && ww.month === currentMonth;
                 return (
-                  <td key={i} style={{ paddingTop: '8px' }}>
+                  <td key={i} style={{ paddingTop: '8px' }} className={isCurrent ? 'luck-item-current' : ''}>
                     <span style={{ color: getElementColor(ww.branch), fontWeight: '700' }}>
                       {getTenGods(dayStem, ww.branch)}
                     </span><br/>

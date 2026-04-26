@@ -48,7 +48,7 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
   
   const timeDisplay = userInfo.knowTime 
     ? (userInfo.birthTime ? `${userInfo.birthTime.substring(0,2)}:${userInfo.birthTime.substring(2,4)}` : '')
-    : (userInfo.birthBranch ? `${userInfo.birthBranch}시` : '');
+    : (userInfo.birthBranch ? `${userInfo.birthBranch}시` : (language === 'ko' ? '시간 모름' : 'Unknown Time'));
   
   const isYangYear = ['甲', '丙', '戊', '庚', '壬'].includes(yearStem);
   const isMale = userInfo.gender === 'male';
@@ -68,20 +68,33 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
         <div>
           <h2 style={{ margin: '0 0 8px 0', fontSize: '1.5rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{userInfo.name} {t.sajuResult}</h2>
           <div style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              <span style={{ fontWeight: '600', color: 'var(--text-primary)' }}>
-                {userInfo.calendarType === 'solar' ? t.solar : t.lunar}:
-              </span>
-              <span>{inputDate} {timeDisplay} {userInfo.calendarType === 'lunar' && userInfo.leapMonth === 'leap' ? `(${t.isLeapMonth})` : ''}</span>
-            </div>
-            {userInfo.calendarType === 'lunar' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                <span style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{t.solar}:</span>
-                <span>{solarDate} {userInfo.solarHour !== undefined ? `${String(userInfo.solarHour).padStart(2, '0')}:${String(userInfo.solarMinute).padStart(2, '0')}` : ''}</span>
+                <span style={{ fontWeight: '600', color: 'var(--text-primary)', minWidth: '40px' }}>{t.solar}</span>
+                <span>
+                  {solarDate} 
+                  {userInfo.knowTime && (userInfo.birthTime ? ` ${userInfo.birthTime.substring(0,2)}:${userInfo.birthTime.substring(2,4)}` : '')}
+                </span>
               </div>
-            )}
-            <div style={{ marginTop: '4px', fontSize: '0.9rem' }}>
-              {userInfo.gender === 'male' ? t.male : t.female} / {age}{t.ageSuffix}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <span style={{ fontWeight: '600', color: '#059669', minWidth: '40px' }}>{t.lunar}</span>
+                <span>
+                  {userInfo.lunarDateStr ? (
+                    userInfo.lunarDateStr.replace(/-/g, '년 ').replace(/(\d{2})$/, '$1일')
+                  ) : (
+                    userInfo.calendarType === 'lunar' ? inputDate : '계산중...'
+                  )}
+                  {userInfo.calendarType === 'lunar' && userInfo.leapMonth === 'leap' ? ` (${t.isLeapMonth})` : ''}
+                  
+                  {/* 12지시를 선택했거나 시간을 모르는 경우 음력 행에 표시 */}
+                  {!userInfo.knowTime && (
+                    userInfo.zodiacSign ? ` [${userInfo.zodiacSign}시]` : ` [${language === 'ko' ? '시간 모름' : 'Unknown'}]`
+                  )}
+                </span>
+              </div>
+            </div>
+            <div style={{ marginTop: '6px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+              {userInfo.gender === 'male' ? t.male : t.female} / {t.age} {age}{t.ageSuffix}
             </div>
           </div>
         </div>
@@ -90,44 +103,34 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
       <div style={{ overflowX: 'auto', marginBottom: '25px' }}>
         <table className="saju-table">
           <thead>
-            <tr><th>{t.hourPillar}</th><th>{t.dayPillar}</th><th>{t.monthPillar}</th><th>{t.yearPillar}</th></tr>
+            <tr>
+              <th>{t.hourPillar}</th>
+              <th>{t.dayPillar}</th>
+              <th>{t.monthPillar}</th>
+              <th>{t.yearPillar}</th>
+            </tr>
           </thead>
           <tbody>
-            <tr className="saju-row-label">
-              <td style={{ color: getElementColor(hourStem), fontWeight: '700' }}>{getTenGods(dayStem, hourStem)}</td>
-              <td style={{ color: 'var(--accent-color)', fontWeight: '800' }}>{t.dayMaster}</td>
-              <td style={{ color: getElementColor(monthStem), fontWeight: '700' }}>{getTenGods(dayStem, monthStem)}</td>
-              <td style={{ color: getElementColor(yearStem), fontWeight: '700' }}>{getTenGods(dayStem, yearStem)}</td>
-            </tr>
+            {/* Hanja Stems */}
             <tr>
               <td><div className={`saju-box ${getElementClass(hourStem)}`}>{hourStem}</div></td>
               <td><div className={`saju-box ${getElementClass(dayStem)}`}>{dayStem}</div></td>
               <td><div className={`saju-box ${getElementClass(monthStem)}`}>{monthStem}</div></td>
               <td><div className={`saju-box ${getElementClass(yearStem)}`}>{yearStem}</div></td>
             </tr>
+            {/* Hanja Branches */}
             <tr>
-              <td><div className={`saju-box ${getElementClass(hourBranch)}`}>{hourBranch}</div></td>
-              <td><div className={`saju-box ${getElementClass(dayBranch)}`}>{dayBranch}</div></td>
-              <td><div className={`saju-box ${getElementClass(monthBranch)}`}>{monthBranch}</div></td>
-              <td><div className={`saju-box ${getElementClass(yearBranch)}`}>{yearBranch}</div></td>
+              <td style={{ borderBottom: '1px solid #e5e7eb' }}><div className={`saju-box ${getElementClass(hourBranch)}`}>{hourBranch}</div></td>
+              <td style={{ borderBottom: '1px solid #e5e7eb' }}><div className={`saju-box ${getElementClass(dayBranch)}`}>{dayBranch}</div></td>
+              <td style={{ borderBottom: '1px solid #e5e7eb' }}><div className={`saju-box ${getElementClass(monthBranch)}`}>{monthBranch}</div></td>
+              <td style={{ borderBottom: '1px solid #e5e7eb' }}><div className={`saju-box ${getElementClass(yearBranch)}`}>{yearBranch}</div></td>
             </tr>
-            <tr className="saju-row-footer">
-              <td style={{ fontSize: '0.85rem' }}>
-                <span style={{ color: getElementColor(hourBranch), fontWeight: '700' }}>{getTenGods(dayStem, hourBranch)}</span><br/>
-                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, hourBranch)}</span>
-              </td>
-              <td style={{ fontSize: '0.85rem' }}>
-                <span style={{ color: getElementColor(dayBranch), fontWeight: '700' }}>{getTenGods(dayStem, dayBranch)}</span><br/>
-                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, dayBranch)}</span>
-              </td>
-              <td style={{ fontSize: '0.85rem' }}>
-                <span style={{ color: getElementColor(monthBranch), fontWeight: '700' }}>{getTenGods(dayStem, monthBranch)}</span><br/>
-                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, monthBranch)}</span>
-              </td>
-              <td style={{ fontSize: '0.85rem' }}>
-                <span style={{ color: getElementColor(yearBranch), fontWeight: '700' }}>{getTenGods(dayStem, yearBranch)}</span><br/>
-                <span style={{ color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, yearBranch)}</span>
-              </td>
+            {/* Ten Gods Labels (Matches image structure) */}
+            <tr className="saju-row-label">
+              <td style={{ color: getElementColor(hourStem), fontWeight: '700' }}>{getTenGods(dayStem, hourStem)}</td>
+              <td style={{ color: 'var(--accent-color)', fontWeight: '800' }}>{language === 'ko' ? '일간(나)' : 'Me'}</td>
+              <td style={{ color: getElementColor(monthStem), fontWeight: '700' }}>{getTenGods(dayStem, monthStem)}</td>
+              <td style={{ color: getElementColor(yearStem), fontWeight: '700' }}>{getTenGods(dayStem, yearStem)}</td>
             </tr>
           </tbody>
         </table>
@@ -135,30 +138,33 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
 
       <div className="daewun-header-section" style={{ textAlign: 'center', marginBottom: '15px' }}>
         <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>
-          {t.age} ({t.daewunTitle}: {dwStartAge}, {isForward ? (language === 'ko' ? '순행' : 'Forward') : (language === 'ko' ? '역행' : 'Reverse')})
+          {t.daewunTitle} ({t.age} {dwStartAge}{t.ageSuffix}, {isForward ? (language === 'ko' ? '순행' : 'Forward') : (language === 'ko' ? '역행' : 'Reverse')})
         </div>
         <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-          {language === 'ko' ? `정밀 대운수: ${dInfo?.details || dwStartAge + '년'}` : `Precise Daewun-su: ${dInfo?.details || dwStartAge}`}
-        </div>
-        <div style={{ fontSize: '0.85rem', color: '#3b82f6', fontWeight: '600', marginTop: '3px' }}>
           {language === 'ko' 
-            ? `첫대운 시작일: ${dInfo?.startDate || "계산중..."}` 
-            : `First Daewun Starts: ${dInfo?.startDate || "Calculating..."}`}
+            ? `첫 대운 시작: ${dInfo?.startDate || '계산 중...'} (생후: ${dInfo?.details || dwStartAge + '년'})` 
+            : `First Daewun Starts: ${dInfo?.startDate || 'Calculating...'} (Life days: ${dInfo?.details || dwStartAge})`}
         </div>
       </div>
 
       <div className="horizontal-scroll">
-        <table className="saju-table" style={{ minWidth: '650px' }}>
+        <table className="saju-table" style={{ minWidth: '650px', border: 'none' }}>
           <thead>
             <tr style={{ fontSize: '0.9rem' }}>
               {daewunList.map((dw, idx) => {
-                const active = isActiveDaewun(dw.age);
+                const isCurrent = isActiveDaewun(dw.age);
+                const isSelected = dw.age === selectedDaewunAge;
                 return (
-                  <th key={idx} onClick={() => onSelectDaewun(dw.age)} ref={active ? activeDaewunRef : null}
-                      className={dw.age === selectedDaewunAge ? 'selected-dw' : ''}
-                      style={{ color: active ? 'var(--text-primary)' : '#888' }}>
+                   <th key={idx} onClick={() => onSelectDaewun(dw.age)} ref={isCurrent ? activeDaewunRef : null}
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ cursor: 'pointer', color: (isCurrent || isSelected) ? 'var(--text-primary)' : '#888' }}>
+                    {isCurrent ? (
+                      <span className="current-luck-tag">{language === 'ko' ? '현재' : 'Now'}</span>
+                    ) : isSelected ? (
+                      <span className="selected-luck-tag">{language === 'ko' ? '선택' : 'Select'}</span>
+                    ) : null}
                     {dw.age}<br/>
-                    <span style={{ color: active ? getElementColor(dw.stem) : '#aaa', fontSize: '0.8rem', fontWeight: active ? '700' : '400' }}>
+                    <span style={{ color: (isCurrent || isSelected) ? getElementColor(dw.stem) : '#aaa', fontSize: '0.8rem', fontWeight: (isCurrent || isSelected) ? '700' : '400' }}>
                       {getTenGods(dayStem, dw.stem)}
                     </span>
                   </th>
@@ -168,28 +174,46 @@ export default function ManseryeokDisplay({ sajuData, userInfo, selectedDaewunAg
           </thead>
           <tbody>
             <tr>
-              {daewunList.map((dw, idx) => (
-                <td key={idx} onClick={() => onSelectDaewun(dw.age)} className={dw.age === selectedDaewunAge ? 'selected-dw' : ''}>
-                  <div className={`saju-box ${getElementClass(dw.stem)}`}>{dw.stem}</div>
-                </td>
-              ))}
+              {daewunList.map((dw, idx) => {
+                const isCurrent = isActiveDaewun(dw.age);
+                const isSelected = dw.age === selectedDaewunAge;
+                return (
+                  <td key={idx} onClick={() => onSelectDaewun(dw.age)} 
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ cursor: 'pointer' }}>
+                    <div className={`saju-box ${getElementClass(dw.stem)}`}>{dw.stem}</div>
+                  </td>
+                );
+              })}
             </tr>
             <tr>
-              {daewunList.map((dw, idx) => (
-                <td key={idx} onClick={() => onSelectDaewun(dw.age)} className={dw.age === selectedDaewunAge ? 'selected-dw' : ''}>
-                  <div className={`saju-box ${getElementClass(dw.branch)}`}>{dw.branch}</div>
-                </td>
-              ))}
+              {daewunList.map((dw, idx) => {
+                const isCurrent = isActiveDaewun(dw.age);
+                const isSelected = dw.age === selectedDaewunAge;
+                return (
+                  <td key={idx} onClick={() => onSelectDaewun(dw.age)} 
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ cursor: 'pointer' }}>
+                    <div className={`saju-box ${getElementClass(dw.branch)}`}>{dw.branch}</div>
+                  </td>
+                );
+              })}
             </tr>
             <tr style={{ fontSize: '0.85rem', color: '#666' }}>
-              {daewunList.map((dw, idx) => (
-                <td key={idx} onClick={() => onSelectDaewun(dw.age)} className={dw.age === selectedDaewunAge ? 'selected-dw' : ''}>
-                  <span style={{ color: getElementColor(dw.branch), fontWeight: '700' }}>
-                    {getTenGods(dayStem, dw.branch)}
-                  </span><br/>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{getTwelveStages(dayStem, dw.branch)}</span>
-                </td>
-              ))}
+              {daewunList.map((dw, idx) => {
+                const isCurrent = isActiveDaewun(dw.age);
+                const isSelected = dw.age === selectedDaewunAge;
+                return (
+                  <td key={idx} onClick={() => onSelectDaewun(dw.age)} 
+                      className={`${isSelected ? 'luck-item-selected' : ''} ${isCurrent ? 'luck-item-current' : ''}`}
+                      style={{ cursor: 'pointer' }}>
+                    <span style={{ color: (isCurrent || isSelected) ? getElementColor(dw.branch) : '#aaa', fontWeight: '700' }}>
+                      {getTenGods(dayStem, dw.branch)}
+                    </span><br/>
+                    <span style={{ fontSize: '0.75rem', color: (isCurrent || isSelected) ? 'var(--text-secondary)' : '#ccc' }}>{getTwelveStages(dayStem, dw.branch)}</span>
+                  </td>
+                );
+              })}
             </tr>
           </tbody>
         </table>

@@ -85,8 +85,37 @@ export default function SajuHistory({ onSelect, onBack }) {
                 <div style={{ fontWeight: '600', fontSize: '1.1rem', color: 'var(--text-primary)' }}>
                   {item.name} <span style={{ fontSize: '0.9rem', fontWeight: 'normal', color: 'var(--text-secondary)' }}>({item.gender === 'male' ? (language === 'ko' ? '남' : 'M') : (language === 'ko' ? '여' : 'F')})</span>
                 </div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '6px' }}>
-                  {item.birthDate.substring(0,4)} {language === 'ko' ? '년' : '/'} {item.birthDate.substring(4,6)} {language === 'ko' ? '월' : '/'} {item.birthDate.substring(6,8)} {language === 'ko' ? '일' : ''} ({item.calendarType === 'solar' ? t.solar : t.lunar})
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '8px', lineHeight: '1.5' }}>
+                  <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>[양]</span>
+                    {item.birthDate.includes('-') ? (
+                      `${item.birthDate.split('-')[0]}년 ${item.birthDate.split('-')[1]}월 ${item.birthDate.split('-')[2]}일`
+                    ) : (
+                      `${item.birthDate.substring(0,4)}년 ${item.birthDate.substring(4,6)}월 ${item.birthDate.substring(6,8)}일`
+                    )}
+                    {/* 직접 입력한 경우에만 양력 행에 시간 표시 */}
+                    {item.knowTime && (
+                      ` ${item.birthTime && item.birthTime.includes(':') ? item.birthTime : (item.birthTime ? `${item.birthTime.substring(0,2)}:${item.birthTime.substring(2,4)}` : '')}`
+                    )}
+                  </div>
+                  
+                  <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', marginTop: '2px' }}>
+                    <span style={{ color: '#059669', fontWeight: '500' }}>[음]</span>
+                    {item.lunarDateStr ? (
+                      item.lunarDateStr.replace(/-/g, '년 ').replace(/(\d{2})$/, '$1일')
+                    ) : (
+                      item.calendarType === 'lunar' ? 
+                      (item.birthDate.includes('-') ? item.birthDate : `${item.birthDate.substring(0,4)}-${item.birthDate.substring(4,6)}-${item.birthDate.substring(6,8)}`) 
+                      : '계산중...'
+                    )}
+                    {/* 12지시를 선택한 경우에만 음력 행에 12지시 표시 */}
+                    {!item.knowTime && item.zodiacSign && (
+                      <span style={{ marginLeft: '5px', color: '#6366f1' }}>[{item.zodiacSign}시]</span>
+                    )}
+                    {!item.knowTime && !item.zodiacSign && !item.birthBranch && (
+                      <span style={{ marginLeft: '5px', color: '#8e8e93' }}>[시간모름]</span>
+                    )}
+                  </div>
                 </div>
               </div>
               <button 
