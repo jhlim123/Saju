@@ -1,4 +1,4 @@
-export const generateExpertPrompt = (sajuData, luckData) => {
+export const generateExpertPrompt = (sajuData, luckData, userInfo) => {
   const dayStem = sajuData.dayPillarHanja?.[0] || 'O';
   const dayBranch = sajuData.dayPillarHanja?.[1] || 'O';
   const monthStem = sajuData.monthPillarHanja?.[0] || 'O';
@@ -18,16 +18,38 @@ ${hourBranch} ${dayBranch} ${monthBranch} ${yearBranch}`;
   
   // 전체 월운 흐름 텍스트 생성
   const allMonthsText = luckData.monthlyLuck.map(m => 
-    `${m.month}월: ${m.pillar} (${m.god}, 12운성: ${m.stage})`
+    `${m.month}월: ${m.pillar}`
   ).join('\n  ');
+
+  const genderText = userInfo.gender === 'male' ? '남성' : '여성';
+  
+  // 음력 정보 파싱 (lunarDateStr: "YYYY-MM-DD" or "YYYY-MM-DD(윤)")
+  let lunarInfo = '정보 없음';
+  if (userInfo.lunarDateStr) {
+    const isLeap = userInfo.lunarDateStr.includes('윤');
+    const parts = userInfo.lunarDateStr.replace('(윤)', '').split('-');
+    if (parts.length === 3) {
+      lunarInfo = `${parts[0]}년 ${parts[1]}월 ${parts[2]}일 (${isLeap ? '윤달' : '평달'})`;
+    }
+  }
+
+  // 시간 정보
+  const timeInfo = userInfo.knowTime 
+    ? `${userInfo.solarHour || '00'}시 ${userInfo.solarMinute || '00'}분`
+    : (userInfo.zodiacSign ? `${userInfo.zodiacSign}시` : '시간 모름');
+
+  const birthInfo = `- 성별: ${genderText}
+- 양력: ${userInfo.solarYear}년 ${userInfo.solarMonth}월 ${userInfo.solarDay}일 ${userInfo.knowTime ? timeInfo : ''}
+- 음력: ${lunarInfo} ${!userInfo.knowTime && userInfo.zodiacSign ? `(${timeInfo})` : ''}`;
 
   return `명리학 전문가의 관점에서 다음 사주와 운세 흐름을 상세히 분석해 주십시오.
 
 ${wonguk}
 
 [현재 운세 정보]
-- 대운: ${dw.age}세 대운 ${dw.pillar} (${dw.god}, 12운성: ${dw.stage})
-- 세운: ${sw.year}년 ${sw.pillar} (${sw.god}, 12운성: ${sw.stage})
+${birthInfo}
+- 대운: ${dw.age}세 대운 ${dw.pillar}
+- 세운: ${sw.year}년 ${sw.pillar}
 - 절운(월운) 1년 흐름:
   ${allMonthsText}
 

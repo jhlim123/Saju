@@ -386,12 +386,12 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
               <div style={{ position: 'relative' }}>
                 <textarea
                   readOnly
-                  value={generateExpertPrompt(sajuData, luck)}
+                  value={generateExpertPrompt(sajuData, luck, userInfo)}
                   style={{ width: '100%', height: '250px', padding: '15px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-color)', color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: '1.6', resize: 'vertical', fontFamily: 'monospace' }}
                 />
                 <button
                   onClick={() => {
-                    navigator.clipboard.writeText(generateExpertPrompt(sajuData, luck));
+                    navigator.clipboard.writeText(generateExpertPrompt(sajuData, luck, userInfo));
                     setCopied(true);
                     setTimeout(() => setCopied(false), 2000);
                   }}
