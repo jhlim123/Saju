@@ -283,7 +283,13 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
         <div className="luck-flow-card" style={{ marginBottom: '20px', padding: '20px', backgroundColor: 'var(--surface-color)', borderRadius: '20px', border: '1px solid var(--border-color)', boxShadow: '0 2px 10px rgba(0,0,0,0.02)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }}>
             <h4 style={{ color: 'var(--text-primary)', margin: 0, fontWeight: '600', fontSize: '1.1rem' }}>
-              {t.daewunDesc} — {luck.daewun.age}{t.ageSuffix} ({luck.daewun.pillar} {luck.daewun.god}운)
+              {t.daewunDesc} — {luck.daewun.age}{t.ageSuffix} 
+              <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 'normal', marginLeft: '8px' }}>
+                ({parseInt(userInfo.birthDate.split('-')[0]) + luck.daewun.age}년 ~ {parseInt(userInfo.birthDate.split('-')[0]) + luck.daewun.age + 9}년)
+              </span>
+              <div style={{ marginTop: '4px', fontSize: '1rem', color: 'var(--text-primary)' }}>
+                {luck.daewun.pillar} {luck.daewun.god}운
+              </div>
             </h4>
             {language !== 'ko' && (
               <button onClick={() => handleTranslate(`대운 해설\n\n[자평진전 관점]\n${luck.daewun.japyung}\n\n[연해자평 관점]\n${luck.daewun.yeonhae}`)} style={{ padding: '6px 12px', background: 'var(--bg-color)', color: 'var(--text-primary)', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '500' }}>
