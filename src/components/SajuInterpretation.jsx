@@ -51,7 +51,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
           fontSize: '0.85rem',
           fontWeight: 'bold'
         }}>{char}</span>
-        {label && <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{label}</span>}
+        {label && <span style={{ fontSize: '0.8rem', color: 'var(--text-primary)', fontWeight: '500' }}>{label}</span>}
       </span>
     );
   };
@@ -140,7 +140,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
             <div style={{ color: 'var(--text-primary)', fontWeight: '600', fontSize: '0.95rem', marginBottom: '8px' }}>② 십성 흐름 — 사회적 환경과 역량 발휘 방식</div>
             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }}>
               {fullAnalysis.sortedGods.map(([god, cnt]) => (
-                <span key={god} style={{ padding: '4px 12px', borderRadius: '16px', fontSize: '0.85rem', background: cnt >= 2 ? 'var(--text-primary)' : 'var(--bg-color)', color: cnt >= 2 ? 'var(--surface-color)' : 'var(--text-secondary)', fontWeight: '500' }}>{god} ×{cnt}</span>
+                <span key={god} style={{ padding: '4px 12px', borderRadius: '16px', fontSize: '0.85rem', background: cnt >= 2 ? 'var(--text-primary)' : 'var(--bg-color)', color: cnt >= 2 ? 'var(--surface-color)' : 'var(--text-primary)', fontWeight: '600' }}>{god} ×{cnt}</span>
               ))}
             </div>
             <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.95rem', margin: 0, wordBreak: 'keep-all' }}>
@@ -234,7 +234,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
           {/* 6. 핵심 조언 */}
           <div style={{ padding: '20px', background: 'var(--text-primary)', borderRadius: '20px', color: 'var(--surface-color)', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
             <div style={{ fontWeight: '600', fontSize: '1rem', marginBottom: '10px' }}>⑥ 삶의 태도와 핵심 조언</div>
-            <p style={{ lineHeight: '1.8', fontSize: '0.95rem', color: '#e5e5ea', margin: 0, wordBreak: 'keep-all' }}>
+            <p style={{ lineHeight: '1.8', fontSize: '0.95rem', color: 'white', opacity: 0.9, margin: 0, wordBreak: 'keep-all' }}>
               <strong style={{ color: 'white' }}>{fullAnalysis.dayPillar}</strong> 일주는 {fullAnalysis.dayPillarInfo} {fullAnalysis.lacking.length > 0 && fullAnalysis.lackingAdvice[fullAnalysis.lacking[0]]} {fullAnalysis.excess.length > 0 && fullAnalysis.excessWarning[fullAnalysis.excess[0]]} 균형 잡힌 삶을 위해 자신의 강점을 살리되, 부족한 기운을 의식적으로 보완해 나가는 것이 이 사주의 핵심 과제입니다.
             </p>
           </div>
@@ -398,30 +398,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
         </div>
       )}
 
-      <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
-        <button
-          className="reset-button"
-          onClick={onReset}
-          style={{
-            padding: '16px 40px',
-            fontSize: '1.1rem',
-            fontWeight: '600',
-            color: 'white',
-            background: 'var(--text-primary)',
-            border: 'none',
-            borderRadius: '24px',
-            cursor: 'pointer',
-            boxShadow: '0 10px 20px -5px rgba(0, 0, 0, 0.2)',
-            transition: 'transform 0.2s, background-color 0.2s',
-          }}
-          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#000'}
-          onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--text-primary)'}
-        >
-          {t.newLookup}
-        </button>
-      </div>
-
-      <div style={{ marginTop: '30px', fontSize: '0.85rem', color: '#94a3b8', textAlign: 'center', padding: '10px' }}>
+      <div style={{ marginTop: '50px', fontSize: '0.85rem', color: '#94a3b8', textAlign: 'center', padding: '10px' }}>
         {t.aiNotice}
       </div>
     </div>

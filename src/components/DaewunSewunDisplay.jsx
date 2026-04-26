@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { calculateSewun, calculateWolun, getTenGods, getTwelveStages, getShensha, getElementClass } from '../utils/sajuLogic';
+import { calculateSewun, calculateWolun, getTenGods, getTwelveStages, getShensha, getElementClass, getElementColor } from '../utils/sajuLogic';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations, translateTenGods, translateTwelveStages } from '../utils/translations';
 
@@ -63,7 +63,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
                       transition: 'all 0.2s'
                     }}>
                   {sw.year}<br/>
-                  <span style={{ color: `var(--${getElementClass(sw.stem).replace('element-', '')}-text)`, fontSize: '0.8rem' }}>
+                  <span style={{ color: getElementColor(sw.stem), fontSize: '0.8rem', fontWeight: '700' }}>
                     {getTenGods(dayStem, sw.stem)}
                   </span>
                 </th>
@@ -96,7 +96,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
                   <td key={i} 
                       onClick={() => onSelectSewun(sw.year)}
                       style={{ paddingTop: '8px', cursor: 'pointer', backgroundColor: sw.year === selectedSewunYear ? 'rgba(59, 130, 246, 0.05)' : 'transparent', transition: 'all 0.2s' }}>
-                    <span style={{ color: `var(--${getElementClass(sw.branch).replace('element-', '')}-text)`, fontWeight: '600' }}>
+                    <span style={{ color: getElementColor(sw.branch), fontWeight: '700' }}>
                       {getTenGods(dayStem, sw.branch)}
                     </span><br/>
                     <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>{getTwelveStages(dayStem, sw.branch)}</span><br/>
@@ -122,7 +122,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
               {wolunList.map((ww, i) => (
                 <th key={i} ref={ww.month === currentMonth ? wolunRef : null}>
                   {language === 'ko' ? `${ww.month}월(${ww.jeolgi})` : `${monthEn[ww.month]}(${ww.jeolgi})`}<br/>
-                  <span style={{ color: `var(--${getElementClass(ww.stem).replace('element-', '')}-text)`, fontSize: '0.8rem' }}>
+                  <span style={{ color: getElementColor(ww.stem), fontSize: '0.8rem', fontWeight: '700' }}>
                     {getTenGods(dayStem, ww.stem)}
                   </span>
                 </th>
@@ -145,7 +145,7 @@ export default function DaewunSewunDisplay({ sajuData, userInfo, selectedDaewunA
                 const ss = getShensha(dayStem, ww.stem, ww.branch, birthYearBranch);
                 return (
                   <td key={i} style={{ paddingTop: '8px' }}>
-                    <span style={{ color: `var(--${getElementClass(ww.branch).replace('element-', '')}-text)`, fontWeight: '600' }}>
+                    <span style={{ color: getElementColor(ww.branch), fontWeight: '700' }}>
                       {getTenGods(dayStem, ww.branch)}
                     </span><br/>
                     <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>{getTwelveStages(dayStem, ww.branch)}</span><br/>

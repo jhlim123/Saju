@@ -228,17 +228,107 @@ export const getElementClass = (c) => {
   return '';
 };
 
+/**
+ * 오행별 텍스트 색상 (사용자 요청에 따라 검정색으로 통일)
+ */
+export const getElementColor = (char) => {
+  return 'var(--text-primary)';
+};
+
 // Interpretation Logics
 export const getInterpretation = (s) => {
+  const ds = s.dayPillarHanja[0];
   const mb = s.monthPillarHanja[1];
-  const gMap = { '子': '편재', '丑': '정관', '寅': '편관', '卯': '정인', '辰': '겁재', '巳': '식신', '午': '상관', '未': '비견', '申': '겁재', '酉': '정재', '戌': '편인', '亥': '정관' };
-  return { gyeok: gMap[mb] || '일반', japyung: '자평진전 기준 분석 결과입니다.', yeonhae: '연해자평 기준 분석 결과입니다.' };
+  const god = getTenGods(ds, mb);
+  
+  const gMap = {
+    '비견': '건록격(建祿格). 자수성가하고 주관이 뚜렷하며 독립심이 강한 명조입니다.',
+    '겁재': '월겁격(月劫格). 경쟁심이 강하고 추진력이 좋으나 재물 관리에 유의해야 합니다.',
+    '식신': '식신격(食神格). 의식주가 풍족하고 성격이 원만하며 창의적 능력이 뛰어납니다.',
+    '상관': '상관격(傷官格). 두뇌가 총명하고 재주가 많으며 자기표현이 탁월한 명조입니다.',
+    '편재': '편재격(偏財格). 사업적 수완이 좋고 활동 범위가 넓으며 큰 재물을 추구합니다.',
+    '정재': '정재격(正財格). 성실하고 근검절약하며 안정적인 자산 형성에 강점이 있습니다.',
+    '편관': '편관격(偏官格). 의협심이 강하고 책임감이 중하며 카리스마 있는 지도자형입니다.',
+    '정관': '정관격(正官格). 인격이 고결하고 규범을 준수하며 명예와 관운이 따르는 명조입니다.',
+    '편인': '편인격(偏印格). 직관력이 뛰어나고 신비로운 분야나 전문 기술에 재능이 있습니다.',
+    '정인': '정인격(正印格). 학문과 인품이 높고 윗사람의 도움이 많으며 자비로운 성품입니다.'
+  };
+
+  const yeonhaeMap = {
+    '비견': '사람이 강직하고 굽히지 않으며 동료와 협력하여 큰 뜻을 이룹니다.',
+    '겁재': '재물을 다루는 데 과감하나 쟁투를 피하고 실리를 챙기는 지혜가 필요합니다.',
+    '식신': '복록이 두터워 평생 배를 곯지 않으며 주변 사람들에게 덕을 베풉니다.',
+    '상관': '재주가 넘쳐 세상에 이름을 날리나 구설수를 조심하고 겸손해야 합니다.',
+    '편재': '사방으로 재물이 널려 있으니 부지런히 움직이면 큰 부를 이룰 것입니다.',
+    '정재': '한 땀 한 땀 노력하여 쌓은 재물이니 잃지 않고 가문을 일으킬 상입니다.',
+    '편관': '어려운 고난을 이겨내고 권위를 세우니 만인이 우러러보는 자리에 오릅니다.',
+    '정관': '나라의 녹을 먹고 이름을 날리며 집안을 평안하게 할 귀한 명입니다.',
+    '편인': '기예가 출중하여 한 가지 분야에서 일가를 이루니 명성이 높습니다.',
+    '정인': '글문이 트여 지혜롭고 부모의 음덕이 깊어 평생이 안온할 것입니다.'
+  };
+
+  return { 
+    gyeok: god || '일반', 
+    japyung: gMap[god] || '자평진전 기준 분석 결과, 개성이 뚜렷한 명조입니다.', 
+    yeonhae: yeonhaeMap[god] || '연해자평 기준 분석 결과, 타고난 기질이 조화롭습니다.' 
+  };
 };
 
 export const getCurrentLuckInterpretation = (s, u, year) => {
+  const ds = s.dayPillarHanja[0];
+  const currentAge = calculateInternationalAge(u.birthDate);
+  const dwList = calculateDaewun(s.yearPillarHanja[0], s.monthPillarHanja, u.gender, u.daewunInfo?.age || 9);
+  
+  // 현재 나이에 해당하는 대운 찾기
+  const currentDaewun = dwList.find(d => currentAge >= d.age && currentAge < d.age + 10) || dwList[0];
+  const dwGod = getTenGods(ds, currentDaewun.stem);
+  const dwBranchGod = getTenGods(ds, currentDaewun.branch);
+
+  // 세운(연운) 정보
+  const baseYear = 1984; 
+  const diff = (year - baseYear) % 60;
+  const idx = diff >= 0 ? diff : diff + 60;
+  const swPillar = gapjaArray[idx];
+  const swGod = getTenGods(ds, swPillar[0]);
+  const swBranchGod = getTenGods(ds, swPillar[1]);
+
+  const godDesc = {
+    '비견': '주체성이 강해지고 독립적인 일을 시작하기 좋은 시기입니다.',
+    '겁재': '경쟁이 치열해지나 큰 에너지를 발휘하여 목표를 쟁취할 수 있습니다. 재물 지출에 유의하세요.',
+    '식신': '활동 영역이 넓어지고 의식주가 풍족해지며 새로운 아이디어가 샘솟는 시기입니다.',
+    '상관': '재능을 발휘하여 성과를 내기 좋으나 윗사람과의 마찰이나 구설을 조심해야 합니다.',
+    '편재': '큰 재물의 기회가 오고 활동 범위가 글로벌하게 확장되는 역동적인 운세입니다.',
+    '정재': '안정적인 수익이 발생하고 노력한 만큼 확실한 결실을 맺는 시기입니다.',
+    '편관': '책임감이 커지고 명예를 얻을 수 있으나 과도한 스트레스 관리가 필요합니다.',
+    '정관': '승진이나 합격 등 조직 내에서 지위가 상승하고 공적인 일이 잘 풀리는 운입니다.',
+    '편인': '전문 지식을 습득하거나 내면을 성찰하기 좋으며 특수한 분야에서 기회를 잡습니다.',
+    '정인': '문서 계약에 길하고 윗사람의 도움을 받으며 마음이 평안해지는 시기입니다.'
+  };
+
+  // 월운(절운) 정보
+  const wolunList = calculateWolun(s.yearPillarHanja[0]);
+  const monthlyLuck = wolunList.map(w => ({
+    month: w.month,
+    pillar: w.pillar,
+    god: getTenGods(ds, w.stem),
+    desc: `${getTenGods(ds, w.stem)}과 ${getTenGods(ds, w.branch)}의 기운이 교차하는 달입니다. ${godDesc[getTenGods(ds, w.stem)] || '조화로운 흐름이 예상됩니다.'}`
+  }));
+
   return {
-    daewun: { age: u.daewunInfo?.age || 9, pillar: '대운', god: '운세', japyung: '대운 자평 해설', yeonhae: '대운 연해 해설' },
-    sewun: { year: year, pillar: '세운', god: '운세', japyung: '세운 자평 해설', yeonhae: '세운 연해 해설' },
-    monthlyLuck: []
+    daewun: { 
+      age: currentDaewun.age, 
+      pillar: currentDaewun.pillar, 
+      god: dwGod, 
+      japyung: `${dwGod}과 ${dwBranchGod}운이 들어오는 시기로, ${godDesc[dwGod]}`, 
+      yeonhae: `대운의 흐름이 ${currentDaewun.pillar}로 흐르니 환경의 변화를 잘 살피어 대처하시기 바랍니다.` 
+    },
+    sewun: { 
+      year: year, 
+      pillar: swPillar, 
+      god: swGod, 
+      japyung: `${swGod}운이 주도하는 해로, ${godDesc[swGod]}`, 
+      yeonhae: `${swPillar}의 기운이 명조와 어우러져 한 해의 길흉화복을 결정짓습니다.` 
+    },
+    monthlyLuck
   };
 };
