@@ -67,24 +67,32 @@ body {
   color: var(--text-primary);
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: clamp(0px, 4vw, 40px) clamp(0px, 2vw, 20px);
   width: 100%;
+  min-height: 100vh;
 }
 
 .app-container {
-  max-width: 480px;
+  max-width: 900px; /* Expanded for desktop */
   width: 100%;
   background: var(--surface-color);
-  border-radius: 32px;
+  border-radius: clamp(0px, 4vw, 32px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
   padding-bottom: 30px;
   margin: 0 auto;
-  min-height: 80vh;
+  min-height: calc(100vh - 80px);
   overflow: hidden;
   border: 1px solid var(--border-color);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (max-width: 520px) {
+@media (max-width: 920px) {
+  .app-container {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 640px) {
   body {
     padding: 0;
   }
@@ -302,6 +310,54 @@ body {
     font-size: 0.75rem !important;
   }
 }
+/* Responsive Grid System */
+.responsive-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Form Layout Refinement */
+.form-fields {
+  display: grid;
+  gap: 15px;
+}
+
+@media (min-width: 768px) {
+  .form-fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .form-row-full {
+    grid-column: span 2;
+  }
+}
+
+/* Typography & Spacing */
+h2 { font-size: clamp(1.2rem, 4vw, 1.8rem); }
+h3 { font-size: clamp(1.1rem, 3.5vw, 1.5rem); }
+h4 { font-size: clamp(1rem, 3vw, 1.25rem); }
+
+.card {
+  padding: clamp(16px, 4vw, 24px);
+  margin-bottom: clamp(12px, 3vw, 20px);
+}
+
+/* Fix for small screens horizontal scroll padding */
+@media (max-width: 480px) {
+  .horizontal-scroll {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
 /* UI Buttons & Icons */
 .btn-secondary {
   padding: 10px 20px;

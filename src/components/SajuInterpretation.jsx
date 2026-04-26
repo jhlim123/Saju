@@ -128,7 +128,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
               </button>
             )}
           </div>
-
+        <div className="responsive-grid" style={{ marginBottom: '20px' }}>
           {/* 1. 일주 기질 */}
           <div style={{ marginBottom: '12px', padding: '16px', backgroundColor: 'var(--surface-color)', borderRadius: '20px', border: '1px solid var(--border-color)', boxShadow: '0 2px 10px rgba(0,0,0,0.02)' }}>
             <div style={{ color: 'var(--text-primary)', fontWeight: '600', fontSize: '0.95rem', marginBottom: '6px' }}>① 일주 {renderColoredHanja(fullAnalysis.dayPillar[0])}{renderColoredHanja(fullAnalysis.dayPillar[1])} — 본연의 기질과 중심 성격</div>
@@ -237,6 +237,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
             <p style={{ lineHeight: '1.8', fontSize: '0.95rem', color: 'white', opacity: 0.9, margin: 0, wordBreak: 'keep-all' }}>
               <strong style={{ color: 'white' }}>{fullAnalysis.dayPillar}</strong> 일주는 {fullAnalysis.dayPillarInfo} {fullAnalysis.lacking.length > 0 && fullAnalysis.lackingAdvice[fullAnalysis.lacking[0]]} {fullAnalysis.excess.length > 0 && fullAnalysis.excessWarning[fullAnalysis.excess[0]]} 균형 잡힌 삶을 위해 자신의 강점을 살리되, 부족한 기운을 의식적으로 보완해 나가는 것이 이 사주의 핵심 과제입니다.
             </p>
+          </div>
           </div>
         </div>
       )}

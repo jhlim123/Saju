@@ -92,35 +92,39 @@ export default function SajuInputForm({ onSubmit }) {
         <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{t.appName}</h2>
       </div>
 
-      <div className="toggle-group" style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
-        {/* Gender Toggle */}
-        <div style={{ display: 'flex', background: '#e5e5ea', borderRadius: '14px', overflow: 'hidden', padding: '3px', flex: 1, minWidth: '90px' }}>
-          <button onClick={() => setGender('male')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: gender === 'male' ? 'white' : 'transparent', borderRadius: '12px', border: 'none', boxShadow: gender === 'male' ? '0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04)' : 'none', color: gender === 'male' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.male}</button>
-          <button onClick={() => setGender('female')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: gender === 'female' ? 'white' : 'transparent', borderRadius: '12px', border: 'none', boxShadow: gender === 'female' ? '0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04)' : 'none', color: gender === 'female' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.female}</button>
-        </div>
-
-        {/* Calendar Toggle */}
-        <div style={{ display: 'flex', background: '#e5e5ea', borderRadius: '14px', overflow: 'hidden', padding: '3px', flex: 1, minWidth: '90px' }}>
-          <button onClick={() => setCalendarType('solar')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: calendarType === 'solar' ? 'white' : 'transparent', borderRadius: '12px', border: 'none', boxShadow: calendarType === 'solar' ? '0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04)' : 'none', color: calendarType === 'solar' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.solar}</button>
-          <button onClick={() => setCalendarType('lunar')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: calendarType === 'lunar' ? 'white' : 'transparent', borderRadius: '12px', border: 'none', boxShadow: calendarType === 'lunar' ? '0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04)' : 'none', color: calendarType === 'lunar' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.lunar}</button>
-        </div>
-
-        {/* Leap Month Toggle */}
-        <div style={{ display: 'flex', background: '#e5e5ea', borderRadius: '14px', overflow: 'hidden', padding: '3px', flex: 1, minWidth: '90px' }}>
-          <button onClick={() => setLeapMonth('normal')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: leapMonth === 'normal' ? 'white' : 'transparent', borderRadius: '12px', border: 'none', boxShadow: leapMonth === 'normal' ? '0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04)' : 'none', color: leapMonth === 'normal' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.normalMonth}</button>
-          <button onClick={() => setLeapMonth('leap')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: leapMonth === 'leap' ? 'white' : 'transparent', borderRadius: '12px', border: 'none', boxShadow: leapMonth === 'leap' ? '0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04)' : 'none', color: leapMonth === 'leap' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.isLeapMonth}</button>
-        </div>
-      </div>
-
-      <div className="form-fields" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <div className="form-row" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+      <div className="form-fields">
+        <div className="form-row" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <label style={{ minWidth: '80px', fontSize: '1rem', fontWeight: 'bold' }}>{t.name}</label>
-          <input type="text" placeholder="" value={name} onChange={e => setName(e.target.value)} style={{ flex: '1 1 200px', padding: '12px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem', outline: 'none' }} />
+          <input type="text" placeholder="" value={name} onChange={e => setName(e.target.value)} style={{ flex: 1, padding: '12px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '1rem', outline: 'none' }} />
         </div>
 
-        <div className="form-row" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+        <div className="form-row" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label style={{ minWidth: '80px', fontSize: '1rem', fontWeight: 'bold' }}>{t.gender}</label>
+          <div style={{ display: 'flex', background: '#e5e5ea', borderRadius: '10px', padding: '2px', flex: 1 }}>
+            <button onClick={() => setGender('male')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: gender === 'male' ? 'white' : 'transparent', borderRadius: '8px', border: 'none', boxShadow: gender === 'male' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none', color: gender === 'male' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.male}</button>
+            <button onClick={() => setGender('female')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: gender === 'female' ? 'white' : 'transparent', borderRadius: '8px', border: 'none', boxShadow: gender === 'female' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none', color: gender === 'female' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.female}</button>
+          </div>
+        </div>
+
+        <div className="form-row" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label style={{ minWidth: '80px', fontSize: '1rem', fontWeight: 'bold' }}>{t.calendar}</label>
+          <div style={{ display: 'flex', background: '#e5e5ea', borderRadius: '10px', padding: '2px', flex: 1 }}>
+            <button onClick={() => setCalendarType('solar')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: calendarType === 'solar' ? 'white' : 'transparent', borderRadius: '8px', border: 'none', boxShadow: calendarType === 'solar' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none', color: calendarType === 'solar' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.solar}</button>
+            <button onClick={() => setCalendarType('lunar')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: calendarType === 'lunar' ? 'white' : 'transparent', borderRadius: '8px', border: 'none', boxShadow: calendarType === 'lunar' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none', color: calendarType === 'lunar' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.lunar}</button>
+          </div>
+        </div>
+
+        <div className="form-row" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label style={{ minWidth: '80px', fontSize: '1rem', fontWeight: 'bold' }}>{t.leapMonth}</label>
+          <div style={{ display: 'flex', background: '#e5e5ea', borderRadius: '10px', padding: '2px', flex: 1 }}>
+            <button onClick={() => setLeapMonth('normal')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: leapMonth === 'normal' ? 'white' : 'transparent', borderRadius: '8px', border: 'none', boxShadow: leapMonth === 'normal' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none', color: leapMonth === 'normal' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.normalMonth}</button>
+            <button onClick={() => setLeapMonth('leap')} style={{ flex: 1, cursor: 'pointer', padding: '8px 12px', background: leapMonth === 'leap' ? 'white' : 'transparent', borderRadius: '8px', border: 'none', boxShadow: leapMonth === 'leap' ? '0 2px 5px rgba(0,0,0,0.1)' : 'none', color: leapMonth === 'leap' ? '#1d1d1f' : '#8e8e93', fontWeight: '600', fontSize: '0.9rem', transition: 'all 0.2s' }}>{t.isLeapMonth}</button>
+          </div>
+        </div>
+
+        <div className="form-row form-row-full" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
           <label style={{ minWidth: '80px', fontSize: '1rem', fontWeight: 'bold' }}>{t.birthDate}</label>
-          <div style={{ flex: '1 1 200px', display: 'flex', gap: '5px' }}>
+          <div style={{ flex: '1 1 300px', display: 'flex', gap: '5px' }}>
             <select value={year} onChange={e => setYear(e.target.value)} style={{ ...selectStyle, color: year ? '#1d1d1f' : '#8e8e93' }}>
               <option value="">{language === 'ko' ? '년' : 'Year'}</option>
               {years.map(y => <option key={y} value={y}>{y}{language === 'ko' ? '년' : ''}</option>)}
