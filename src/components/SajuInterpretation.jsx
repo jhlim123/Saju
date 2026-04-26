@@ -285,7 +285,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
             <h4 style={{ color: 'var(--text-primary)', margin: 0, fontWeight: '600', fontSize: '1.1rem' }}>
               {t.daewunDesc} — {luck.daewun.age}{t.ageSuffix} 
               <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 'normal', marginLeft: '8px' }}>
-                ({parseInt(userInfo.birthDate.split('-')[0]) + luck.daewun.age}년 ~ {parseInt(userInfo.birthDate.split('-')[0]) + luck.daewun.age + 9}년)
+                ({(userInfo.birthDate.includes('-') ? parseInt(userInfo.birthDate.split('-')[0]) : parseInt(userInfo.birthDate.substring(0, 4))) + luck.daewun.age}년 ~ {(userInfo.birthDate.includes('-') ? parseInt(userInfo.birthDate.split('-')[0]) : parseInt(userInfo.birthDate.substring(0, 4))) + luck.daewun.age + 9}년)
               </span>
               <div style={{ marginTop: '4px', fontSize: '1rem', color: 'var(--text-primary)' }}>
                 {luck.daewun.pillar} {luck.daewun.god}운
