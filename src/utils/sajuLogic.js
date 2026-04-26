@@ -274,13 +274,14 @@ export const getInterpretation = (s) => {
   };
 };
 
-export const getCurrentLuckInterpretation = (s, u, year) => {
+export const getCurrentLuckInterpretation = (s, u, year, selectedDaewunAge) => {
   const ds = s.dayPillarHanja[0];
   const currentAge = calculateInternationalAge(u.birthDate);
   const dwList = calculateDaewun(s.yearPillarHanja[0], s.monthPillarHanja, u.gender, u.daewunInfo?.age || 9);
   
-  // 현재 나이에 해당하는 대운 찾기
-  const currentDaewun = dwList.find(d => currentAge >= d.age && currentAge < d.age + 10) || dwList[0];
+  // 선택된 대운 또는 현재 나이에 해당하는 대운 찾기
+  const targetAge = selectedDaewunAge !== undefined ? selectedDaewunAge : currentAge;
+  const currentDaewun = dwList.find(d => targetAge >= d.age && targetAge < d.age + 10) || dwList[0];
   const dwGod = getTenGods(ds, currentDaewun.stem);
   const dwBranchGod = getTenGods(ds, currentDaewun.branch);
 

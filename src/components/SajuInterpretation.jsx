@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations, translateTenGods } from '../utils/translations';
 
-export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYear, onReset }) {
+export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYear, selectedDaewunAge, onReset }) {
   const { language } = useLanguage();
   const t = translations[language];
   const [showPrompt, setShowPrompt] = useState(false);
@@ -63,7 +63,7 @@ export default function SajuInterpretation({ sajuData, userInfo, selectedSewunYe
   let personality = null;
 
   try { interpretation = getInterpretation(sajuData); } catch (e) { console.error('격국 해설 오류:', e); }
-  try { luck = getCurrentLuckInterpretation(sajuData, userInfo, selectedSewunYear || new Date().getFullYear()); } catch (e) { console.error('운세 해설 오류:', e); }
+  try { luck = getCurrentLuckInterpretation(sajuData, userInfo, selectedSewunYear || new Date().getFullYear(), selectedDaewunAge); } catch (e) { console.error('운세 해설 오류:', e); }
   try { personality = getPersonalityAnalysis(sajuData); } catch (e) { console.error('성격 해설 오류:', e); }
   let fullAnalysis = null;
   try { fullAnalysis = getFullAnalysis(sajuData); } catch (e) { console.error('종합분석 오류:', e); }

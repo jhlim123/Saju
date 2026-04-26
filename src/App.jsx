@@ -297,6 +297,7 @@ function App() {
             sajuData={sajuData} 
             userInfo={userInfo} 
             selectedSewunYear={selectedSewunYear}
+            selectedDaewunAge={selectedDaewunAge}
             onReset={handleReset}
           />
           <div style={{ padding: '0 20px 40px', display: 'flex', gap: '10px' }}>
