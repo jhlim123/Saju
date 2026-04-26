@@ -36,7 +36,6 @@ export default function SajuHistory({ onSelect, onBack }) {
     <div style={{ padding: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h2 style={{ fontSize: '1.2rem', fontWeight: '600', color: 'var(--text-primary)' }}>{t.historyTitle}</h2>
-        <button onClick={onBack} style={{ padding: '8px 16px', background: 'var(--bg-color)', border: '1px solid var(--border-color)', borderRadius: '12px', cursor: 'pointer', fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '500' }}>{t.back}</button>
       </div>
 
       {history.length === 0 ? (
